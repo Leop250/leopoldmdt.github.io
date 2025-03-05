@@ -1,0 +1,88 @@
+.projet-modal {
+    display: block; /* TEMPORAIRE : Mettre block pour voir le contenu */
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+    background-color: var(--light-bg);
+    margin: 10% auto;
+    padding: 20px;
+    border-radius: 8px;
+    width: 80%;
+    max-width: 1000px;
+    position: relative;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.close-btn {
+    color: var(--gray-text);
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.close-btn:hover {
+    color: var(--secondary-color);
+}
+
+.projet-details {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.projet-image img {
+    max-width: 100%;
+    border-radius: 8px;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.projet-description h3 {
+    margin-top: 15px;
+    color: var(--primary-color);
+}
+
+.projet-description ul {
+    list-style-type: disc;
+    margin-left: 20px;
+    color: var(--gray-text);
+}
+
+.projet-description p {
+    font-size: 1.1rem;
+    color: var(--dark-text);
+}
+
+/* Bouton Styled */
+.btn-close {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    background: var(--secondary-color);
+    border: none;
+    color: var(--light-text);
+    font-weight: 500;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: var(--transition);
+    font-size: 1rem;
+    text-align: center;
+}
+
+.btn-close:hover {
+    background-color: var(--primary-color);
+}
+
+/* Assurer la bonne intégration avec ton design global */
+body {
+    background-color: var(--light-bg);
+    color: var(--dark-text);
+}
