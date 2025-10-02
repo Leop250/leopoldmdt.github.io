@@ -558,6 +558,16 @@ footer {
     width: 250px;
     height: 250px;
   }
+
+  /* Ajustements mobile pour la section À propos */
+  .about-text-wrapper {
+    text-align: center;
+  }
+
+  .about-text-wrapper .btn {
+    align-self: center;
+    width: fit-content;
+  }
 }
 
 @media (max-width: 768px) {
