@@ -1,80 +1,214 @@
+
+Vous avez dit :
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Portfolio Léopold</title>
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio - Léopold Macquart de Terline</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Roboto+Mono&display=swap" rel="stylesheet">
+    <script defer src="script.js"></script>
 </head>
 <body>
-  <header>
-    <nav class="navbar">
-      <div class="logo">Léopold</div>
-      <ul class="nav-links">
-        <li><a href="#about">À propos</a></li>
-        <li><a href="#portfolio">Portfolio</a></li>
-        <li><a href="#contact">Contact</a></li>
-      </ul>
-    </nav>
-  </header>
+    <!-- HEADER avec menu -->
+    <header id="header">
+        <div class="header-container">
+            <h1>Léopold MDT</h1>
+            <nav>
+                <ul>
+                    <li><a href="#about">À propos</a></li>
+                    <li><a href="#portfolio">Portfolio</a></li>
+                    <li><a href="#courses">Cours</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
 
-  <section class="hero">
-    <div class="hero-content">
-      <h1>Bienvenue, je suis Léopold</h1>
-      <p>Étudiant en Data Analyse et Intelligence Artificielle</p>
-      <div class="hero-buttons">
-        <a href="#portfolio" class="btn btn-secondary">Voir mon travail</a>
-        <a href="#contact" class="btn btn-secondary">Me contacter</a>
-      </div>
-    </div>
-  </section>
+    <!-- SECTION ACCUEIL -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-intro">
+                <div class="hero-text">
+                    <h1 class="hero-title">Data Analyst</h1>
+                    <div class="hero-subtitle">Transformation des données en <span class="highlight">solutions digitales</span></div>
+                    <p class="hero-description">
+                        Je transforme des données complexes en visualisations claires et en analyses exploitables pour aider les entreprises à prendre des décisions éclairées.
+                        Les technologies que j'utilise incluent SQL, Python et Power BI. Découvrez mon travail dans mon portfolio ou contactez-moi directement.
+                    </p>
+                    <div class="hero-buttons">
+                        <a href="#portfolio" class="btn btn-secondary">Voir mon travail</a>
+                        <a href="#contact" class="btn btn-secondary">Me contacter</a>
+                    </div>
+                </div>
+                <div class="hero-profile">
+                    <img src="photo_site.jpeg" alt="Léopold - Data Analyst" class="profile-image">
+                </div>
+            </div>
+        </div>
+    </section>
 
-  <section id="about" class="about">
-    <h2>À propos de moi</h2>
-    <div class="about-container">
-      <img src="profile.jpg" alt="Photo de Léopold" class="profile-pic">
-      <div class="about-text">
-        <p>Data Analyst passionné par la transformation des données brutes en insights stratégiques. Je combine des compétences techniques en SQL, Python et Power BI avec une solide compréhension des enjeux business.</p>
-        <p>Mon approche se concentre sur la création de visualisations claires et d'analyses actionnables pour aider les organisations à prendre des décisions basées sur les données.</p>
-      </div>
-    </div>
-  </section>
+    <!-- SECTION À PROPOS -->
+    <section id="about" class="section">
+        <div class="section-container">
+            <div class="section-header">
+                <span class="section-label">01</span>
+                <h2>À propos</h2>
+            </div>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>Data Analyst passionné par la transformation des données brutes en insights stratégiques. Je combine des compétences techniques en SQL, Python et Power BI avec une solide compréhension des enjeux business.</p>
+                    <p>Mon approche se concentre sur la création de visualisations claires et d'analyses actionnables pour aider les organisations à prendre des décisions basées sur les données.</p>
+                </div>
+                <div class="about-skills">
+                    <div class="skill">
+                        <div class="skill-name">SQL</div>
+                        <div class="skill-bar"><div class="skill-level" style="width: 90%"></div></div>
+                    </div>
+                    <div class="skill">
+                        <div class="skill-name">Python</div>
+                        <div class="skill-bar"><div class="skill-level" style="width: 85%"></div></div>
+                    </div>
+                    <div class="skill">
+                        <div class="skill-name">Power BI</div>
+                        <div class="skill-bar"><div class="skill-level" style="width: 95%"></div></div>
+                    </div>
+                    <div class="skill">
+                        <div class="skill-name">Data Visualization</div>
+                        <div class="skill-bar"><div class="skill-level" style="width: 88%"></div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-  <section id="portfolio" class="portfolio">
-    <h2>Mes projets</h2>
-    <div class="portfolio-grid">
-      <div class="card">
-        <h3>Projet 1</h3>
-        <p>Analyse de données Covid-19 avec BigQuery et Data Studio.</p>
-      </div>
-      <div class="card">
-        <h3>Projet 2</h3>
-        <p>Prédiction de la malaria à l'aide de réseaux de neurones (PyTorch).</p>
-      </div>
-      <div class="card">
-        <h3>Projet 3</h3>
-        <p>Application Flask de recommandation de films avec système JWT.</p>
-      </div>
-    </div>
-  </section>
+    <!-- SECTION PORTFOLIO -->
+    <section id="portfolio" class="section">
+        <div class="section-container">
+            <div class="section-header">
+                <span class="section-label">02</span>
+                <h2>Portfolio</h2>
+            </div>
+            <p class="section-intro">Découvrez mes projets en Data Analysis et Data Visualization.</p>
+            <div class="portfolio-gallery">
+                <div class="portfolio-item">
+                    <img src="img/powerbi1.png" alt="Dashboard Power BI" width="500" height="500">
+                    <div class="portfolio-details">
+                        <h3>Dashboard Power BI</h3>
+                        <p>Analyse des ventes et prévisions pour une entreprise de retail</p>
+                        <a href="public/projet_template.html" class="btn btn-small">Voir le projet</a>
+                    </div>
+                </div>
+                <div class="portfolio-item">
+                    <img src="img/powerbi2.png" alt="Analyse prédictive" width="500" height="500">
+                    <div class="portfolio-details">
+                        <h3>Analyse prédictive</h3>
+                        <p>Modèle de prédiction des tendances clients avec Python</p>
+                        <a href="public/projet_template.html" class="btn btn-small">Voir le projet</a>
+                    </div>
+                </div>
+                <div class="portfolio-item">
+                    <img src="img/powerbi3.png" alt="Visualisation interactive" width="500" height="500">
+                    <div class="portfolio-details">
+                        <h3>Visualisation interactive</h3>
+                        <p>Tableau de bord interactif pour l'analyse des KPIs marketing</p>
+                        <a href="#" class="btn btn-small">Voir le projet</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-  <section id="contact" class="contact">
-    <h2>Contactez-moi</h2>
-    <form>
-      <input type="text" placeholder="Votre nom" required>
-      <input type="email" placeholder="Votre email" required>
-      <textarea placeholder="Votre message" required></textarea>
-      <button type="submit" class="btn btn-primary">Envoyer</button>
-    </form>
-  </section>
+    <!-- SECTION COURS -->
+    <section id="courses" class="section">
+        <div class="section-container">
+            <div class="section-header">
+                <span class="section-label">03</span>
+                <h2>Cours particuliers</h2>
+            </div>
+            <div class="courses-content">
+                <div class="courses-text">
+                    <p>Je propose des formations personnalisées pour développer vos compétences en analyse de données et visualisation.</p>
+                    <ul class="courses-list">
+                        <li>
+                            <span class="course-icon">🔍</span>
+                            <div class="course-details">
+                                <h3>SQL pour l'analyse de données</h3>
+                                <p>Apprenez à extraire et manipuler des données efficacement</p>
+                            </div>
+                        </li>
+                        <li>
+                            <span class="course-icon">🐍</span>
+                            <div class="course-details">
+                                <h3>Python pour Data Scientists</h3>
+                                <p>Maîtrisez pandas, numpy et matplotlib pour l'analyse de données</p>
+                            </div>
+                        </li>
+                        <li>
+                            <span class="course-icon">📊</span>
+                            <div class="course-details">
+                                <h3>Dashboards avec Power BI</h3>
+                                <p>Créez des visualisations interactives et impactantes</p>
+                            </div>
+                        </li>
+                    </ul>
+                    <a href="#contact" class="btn btn-primary">Demander plus d'informations</a>
+                </div>
+                <div class="courses-image">
+                    <img src="img/cours.jpg" alt="Cours en ligne">
+                </div>
+            </div>
+        </div>
+    </section>
 
-  <footer>
-    <p>© 2024 Léopold - Tous droits réservés</p>
-    <div class="socials">
-      <a href="https://www.linkedin.com" target="_blank">LinkedIn</a>
-      <a href="https://github.com" target="_blank">GitHub</a>
-    </div>
-  </footer>
+    <!-- SECTION CONTACT -->
+    <section id="contact" class="section">
+        <div class="section-container">
+            <div class="section-header">
+                <span class="section-label">04</span>
+                <h2>Contact</h2>
+            </div>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <p>Vous avez un projet en tête ou une question ? N'hésitez pas à me contacter.</p>
+                    <div class="contact-method">
+                        <span class="contact-icon">✉️</span>
+                        <span class="contact-detail">leopold.deterline@gmail.com</span>
+                    </div>
+                    <div class="contact-method">
+                        <span class="contact-icon">📱</span>
+                        <span class="contact-detail">+33 7 68 23 94 30</span>
+                    </div>
+                </div>
+                <form class="contact-form">
+                    <div class="form-group">
+                        <label for="name">Nom</label>
+                        <input type="text" id="name" placeholder="Votre nom" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" placeholder="Votre email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" placeholder="Votre message" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Envoyer</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-container">
+            <p>&copy; 2025 Léopold Macquart de Terline - Tous droits réservés.</p>
+            <div class="social-links">
+                <a href="https://www.linkedin.com/in/l%C3%A9opold-macquart-de-terline-b99423235/" aria-label="LinkedIn">LinkedIn</a>
+                <a href="https://github.com/Leop250/" aria-label="GitHub">GitHub</a>
+            </div>
+        </div>
+    </footer>
 </body>
 </html>
-
