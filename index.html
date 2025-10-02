@@ -1,631 +1,879 @@
-/* Styles généraux inspirés de yan-holtz.com */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'Roboto', sans-serif;
-  scroll-behavior: smooth;
-}
-
-:root {
-  --primary-color: #2C3E50;
-  --secondary-color: #E74C3C;
-  --accent-color: #3498DB;
-  --light-bg: #ECF0F1;
-  --dark-text: #2C3E50;
-  --light-text: #ECF0F1;
-  --gray-text: #7F8C8D;
-  --transition: all 0.3s ease;
-}
-
-body {
-  background-color: var(--light-bg);
-  color: var(--dark-text);
-  display: flex;
-  flex-direction: column;
-  font-weight: 300;
-  line-height: 1.6;
-}
-
-/* Typographie */
-h1, h2, h3, h4, h5, h6 {
-  font-weight: 700;
-  margin-bottom: 1rem;
-}
-
-p {
-  margin-bottom: 1rem;
-  font-size: 1.1rem;
-}
-
-.highlight {
-  color: var(--secondary-color);
-  font-weight: 400;
-}
-
-/* HEADER */
-header {
-  position: fixed;
-  top: 0;
-  width: 100%;
-  background: var(--primary-color);
-  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
-  padding: 0;
-  z-index: 1000;
-}
-
-.header-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem 2rem;
-}
-
-header h1 {
-  font-size: 1.8rem;
-  font-weight: 700;
-  color: var(--light-text);
-  margin: 0;
-}
-
-nav ul {
-  display: flex;
-  list-style: none;
-  margin: 0;
-}
-
-nav ul li {
-  margin: 0 1rem;
-}
-
-nav ul li a {
-  text-decoration: none;
-  color: var(--light-text);
-  font-weight: 400;
-  font-size: 1rem;
-  transition: var(--transition);
-  position: relative;
-  padding-bottom: 0.25rem;
-}
-
-nav ul li a:hover {
-  color: var(--secondary-color);
-}
-
-nav ul li a::after {
-  content: '';
-  position: absolute;
-  width: 0;
-  height: 2px;
-  bottom: 0;
-  left: 0;
-  background-color: var(--secondary-color);
-  transition: var(--transition);
-}
-
-nav ul li a:hover::after {
-  width: 100%;
-}
-
-/* Menu Burger */
-.burger-menu {
-  display: none;
-  flex-direction: column;
-  cursor: pointer;
-  z-index: 1001;
-}
-
-.burger-menu span {
-  width: 25px;
-  height: 3px;
-  background-color: var(--light-text);
-  margin: 3px 0;
-  transition: var(--transition);
-  border-radius: 2px;
-}
-
-.burger-menu.active span:nth-child(1) {
-  transform: rotate(45deg) translate(8px, 8px);
-}
-
-.burger-menu.active span:nth-child(2) {
-  opacity: 0;
-}
-
-.burger-menu.active span:nth-child(3) {
-  transform: rotate(-45deg) translate(7px, -7px);
-}
-
-/* Sections générales */
-.section {
-  padding: 5rem 1rem;
-}
-
-.section-container {
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-.section-header {
-  display: flex;
-  align-items: baseline;
-  margin-bottom: 2rem;
-  border-bottom: 1px solid var(--gray-text);
-  padding-bottom: 1rem;
-}
-
-.section-label {
-  font-family: 'Roboto Mono', monospace;
-  color: var(--secondary-color);
-  font-size: 1.2rem;
-  margin-right: 1rem;
-  font-weight: 500;
-}
-
-.section h2 {
-  font-size: 2.5rem;
-  color: var(--primary-color);
-}
-
-.section-intro {
-  font-size: 1.2rem;
-  max-width: 800px;
-  margin: 0 auto 3rem auto;
-  text-align: center;
-  color: var(--gray-text);
-}
-
-/* Boutons */
-.btn {
-  display: inline-block;
-  padding: 0.8rem 1.5rem;
-  background: none;
-  border: 2px solid var(--primary-color);
-  color: var(--primary-color);
-  text-decoration: none;
-  font-weight: 500;
-  border-radius: 3px;
-  cursor: pointer;
-  transition: var(--transition);
-  font-size: 1rem;
-  text-align: center;
-}
-
-.btn-primary {
-  background-color: var(--primary-color);
-  color: var(--light-text);
-}
-
-.btn-primary:hover {
-  background-color: transparent;
-  color: var(--primary-color);
-}
-
-.btn-secondary {
-  background-color: transparent;
-  border-color: var(--secondary-color);
-  color: var(--secondary-color);
-}
-
-.btn-secondary:hover {
-  background-color: var(--secondary-color);
-  color: var(--light-text);
-}
-
-.btn-small {
-  padding: 0.5rem 1rem;
-  font-size: 0.9rem;
-}
-
-/* HERO SECTION */
-.hero {
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  background-color: var(--primary-color);
-  color: var(--light-text);
-  padding: 0 2rem;
-  position: relative;
-}
-
-.hero-content {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding-top: 4rem;
-}
-
-.hero-intro {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  max-width: 1200px;
-  margin: 0 auto;
-  gap: 3rem;
-}
-
-.hero-text {
-  flex: 1;
-}
-
-.hero-profile {
-  flex-shrink: 0;
-}
-
-.profile-image {
-  width: 300px;
-  height: 300px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 5px solid var(--secondary-color);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-}
-
-.hero-title {
-  font-size: 4rem;
-  font-weight: 700;
-  margin-bottom: 1rem;
-}
-
-.hero-subtitle {
-  font-size: 1.8rem;
-  font-weight: 300;
-  margin-bottom: 1.5rem;
-}
-
-.hero-description {
-  max-width: 600px;
-  margin-bottom: 2rem;
-  font-size: 1.2rem;
-  line-height: 1.6;
-}
-
-.hero-buttons {
-  display: flex;
-  gap: 1rem;
-}
-
-/* ABOUT SECTION */
-.about-content {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 3rem;
-  align-items: center;
-}
-
-.about-text p {
-  margin-bottom: 1.5rem;
-}
-
-.about-text-wrapper {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-}
-
-.about-skills {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-}
-
-.skill {
-  width: 100%;
-}
-
-.skill-name {
-  margin-bottom: 0.5rem;
-  font-weight: 500;
-}
-
-.skill-bar {
-  height: 8px;
-  background-color: var(--light-bg);
-  border-radius: 4px;
-  overflow: hidden;
-}
-
-.skill-level {
-  height: 100%;
-  background-color: var(--secondary-color);
-  border-radius: 4px;
-}
-
-/* PORTFOLIO SECTION */
-.portfolio-gallery {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 2rem;
-  margin-top: 3rem;
-}
-
-.portfolio-item {
-  border-radius: 8px;
-  overflow: hidden;
-  background-color: white;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-  transition: var(--transition);
-}
-
-.portfolio-item:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
-}
-
-.portfolio-item img {
-  width: 100%;
-  height: 200px;
-  object-fit: cover;
-  display: block;
-}
-
-.portfolio-details {
-  padding: 1.5rem;
-}
-
-.portfolio-details h3 {
-  font-size: 1.3rem;
-  margin-bottom: 0.5rem;
-  color: var(--primary-color);
-}
-
-.portfolio-details p {
-  color: var(--gray-text);
-  margin-bottom: 1rem;
-  font-size: 0.95rem;
-}
-
-/* COURSES SECTION */
-.courses-content {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 3rem;
-  align-items: center;
-}
-
-.courses-list {
-  list-style: none;
-  margin: 2rem 0;
-}
-
-.courses-list li {
-  display: flex;
-  align-items: flex-start;
-  margin-bottom: 1.5rem;
-}
-
-.course-icon {
-  font-size: 1.5rem;
-  margin-right: 1rem;
-  background-color: var(--light-bg);
-  padding: 0.5rem;
-  border-radius: 50%;
-  display: inline-block;
-  min-width: 50px;
-  height: 50px;
-  text-align: center;
-  line-height: 2;
-}
-
-.course-details h3 {
-  font-size: 1.2rem;
-  margin-bottom: 0.25rem;
-  color: var(--primary-color);
-}
-
-.course-details p {
-  color: var(--gray-text);
-  font-size: 0.95rem;
-}
-
-.courses-image img {
-  width: 100%;
-  border-radius: 8px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-}
-
-/* CONTACT SECTION */
-.contact-content {
-  display: grid;
-  grid-template-columns: 1fr 2fr;
-  gap: 3rem;
-}
-
-.contact-info {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-}
-
-.contact-method {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  font-size: 1.1rem;
-}
-
-.contact-icon {
-  font-size: 1.5rem;
-  color: var(--secondary-color);
-}
-
-.contact-form {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1.5rem;
-}
-
-.form-group {
-  display: flex;
-  flex-direction: column;
-}
-
-.form-group:nth-child(3) {
-  grid-column: span 2;
-}
-
-.form-group:last-child {
-  grid-column: span 2;
-}
-
-.form-group label {
-  margin-bottom: 0.5rem;
-  font-weight: 500;
-  color: var(--primary-color);
-}
-
-.form-group input,
-.form-group textarea {
-  padding: 0.8rem;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-family: 'Roboto', sans-serif;
-  font-size: 1rem;
-  transition: var(--transition);
-}
-
-.form-group input:focus,
-.form-group textarea:focus {
-  outline: none;
-  border-color: var(--accent-color);
-  box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
-}
-
-.form-group textarea {
-  min-height: 150px;
-  resize: vertical;
-}
-
-/* FOOTER */
-footer {
-  background-color: var(--primary-color);
-  color: var(--light-text);
-  padding: 2rem;
-}
-
-.footer-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.social-links {
-  display: flex;
-  gap: 1.5rem;
-}
-
-.social-links a {
-  color: var(--light-text);
-  text-decoration: none;
-  transition: var(--transition);
-}
-
-.social-links a:hover {
-  color: var(--secondary-color);
-}
-
-/* Responsive Design */
-@media (max-width: 992px) {
-  .about-content,
-  .courses-content,
-  .contact-content {
-    grid-template-columns: 1fr;
-    gap: 2rem;
-  }
-  
-  .hero-title {
-    font-size: 3rem;
-  }
-  
-  .hero-subtitle {
-    font-size: 1.5rem;
-  }
-
-  .hero-intro {
-    flex-direction: column;
-    text-align: center;
-    gap: 2rem;
-  }
-
-  .hero-profile {
-    order: -1;
-  }
-
-  .profile-image {
-    width: 250px;
-    height: 250px;
-  }
-}
-
-@media (max-width: 768px) {
-  .header-container {
-    flex-direction: row;
-    padding: 1rem 2rem;
-  }
-  
-  header h1 {
-    margin-bottom: 0;
-  }
-
-  .burger-menu {
-    display: flex;
-  }
-  
-  nav {
-    position: fixed;
-    top: 0;
-    right: -100%;
-    width: 70%;
-    height: 100vh;
-    background-color: var(--primary-color);
-    transition: right 0.3s ease;
-    padding-top: 80px;
-    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.2);
-  }
-
-  nav.active {
-    right: 0;
-  }
-
-  nav ul {
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 2rem;
-  }
-  
-  nav ul li {
-    margin: 1rem 0;
-    width: 100%;
-  }
-
-  nav ul li a {
-    font-size: 1.2rem;
-    display: block;
-    padding: 0.5rem 0;
-  }
-  
-  .portfolio-gallery {
-    grid-template-columns: 1fr;
-  }
-  
-  .contact-form {
-    grid-template-columns: 1fr;
-  }
-  
-  .form-group:nth-child(3) {
-    grid-column: span 1;
-  }
-  
-  .footer-container {
-    flex-direction: column;
-    gap: 1rem;
-    text-align: center;
-  }
-  
-  .social-links {
-    justify-content: center;
-  }
-}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio - Léopold Macquart de Terline</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Roboto+Mono&display=swap" rel="stylesheet">
+    <style>
+        /* Styles généraux inspirés de yan-holtz.com */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        :root {
+            --primary-color: #2C3E50;
+            --secondary-color: #E74C3C;
+            --accent-color: #3498DB;
+            --light-bg: #ECF0F1;
+            --dark-text: #2C3E50;
+            --light-text: #ECF0F1;
+            --gray-text: #7F8C8D;
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            background-color: var(--light-bg);
+            color: var(--dark-text);
+            display: flex;
+            flex-direction: column;
+            font-weight: 300;
+            line-height: 1.6;
+        }
+
+        /* Typographie */
+        h1, h2, h3, h4, h5, h6 {
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        p {
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .highlight {
+            color: var(--secondary-color);
+            font-weight: 400;
+        }
+
+        /* HEADER */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: var(--primary-color);
+            box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 0;
+            z-index: 1000;
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+        }
+
+        header h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--light-text);
+            margin: 0;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            margin: 0;
+        }
+
+        nav ul li {
+            margin: 0 1rem;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: var(--light-text);
+            font-weight: 400;
+            font-size: 1rem;
+            transition: var(--transition);
+            position: relative;
+            padding-bottom: 0.25rem;
+        }
+
+        nav ul li a:hover {
+            color: var(--secondary-color);
+        }
+
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: var(--secondary-color);
+            transition: var(--transition);
+        }
+
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+
+        /* Menu Burger */
+        .burger-menu {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        .burger-menu span {
+            width: 25px;
+            height: 3px;
+            background-color: var(--light-text);
+            margin: 3px 0;
+            transition: var(--transition);
+            border-radius: 2px;
+        }
+
+        .burger-menu.active span:nth-child(1) {
+            transform: rotate(45deg) translate(8px, 8px);
+        }
+
+        .burger-menu.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .burger-menu.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -7px);
+        }
+
+        /* Sections générales */
+        .section {
+            padding: 5rem 1rem;
+        }
+
+        .section-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: baseline;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid var(--gray-text);
+            padding-bottom: 1rem;
+        }
+
+        .section-label {
+            font-family: 'Roboto Mono', monospace;
+            color: var(--secondary-color);
+            font-size: 1.2rem;
+            margin-right: 1rem;
+            font-weight: 500;
+        }
+
+        .section h2 {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+        }
+
+        .section-intro {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 3rem auto;
+            text-align: center;
+            color: var(--gray-text);
+        }
+
+        /* Boutons */
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 1.5rem;
+            background: none;
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 1rem;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: var(--light-text);
+        }
+
+        .btn-primary:hover {
+            background-color: transparent;
+            color: var(--primary-color);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            border-color: var(--secondary-color);
+            color: var(--secondary-color);
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--secondary-color);
+            color: var(--light-text);
+        }
+
+        .btn-small {
+            padding: 0.5rem 1rem;
+            font-size: 0.9rem;
+        }
+
+        /* HERO SECTION */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            background-color: var(--primary-color);
+            color: var(--light-text);
+            padding: 0 2rem;
+            position: relative;
+        }
+
+        .hero-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding-top: 4rem;
+        }
+
+        .hero-intro {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 1200px;
+            margin: 0 auto;
+            gap: 3rem;
+        }
+
+        .hero-text {
+            flex: 1;
+        }
+
+        .hero-profile {
+            flex-shrink: 0;
+        }
+
+        .profile-image {
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid var(--secondary-color);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .hero-title {
+            font-size: 4rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .hero-subtitle {
+            font-size: 1.8rem;
+            font-weight: 300;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-description {
+            max-width: 600px;
+            margin-bottom: 2rem;
+            font-size: 1.2rem;
+            line-height: 1.6;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        /* ABOUT SECTION */
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .about-text p {
+            margin-bottom: 1.5rem;
+        }
+
+        .about-text-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .about-skills {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .skill {
+            width: 100%;
+        }
+
+        .skill-name {
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .skill-bar {
+            height: 8px;
+            background-color: var(--light-bg);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .skill-level {
+            height: 100%;
+            background-color: var(--secondary-color);
+            border-radius: 4px;
+        }
+
+        /* PORTFOLIO SECTION */
+        .portfolio-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .portfolio-item {
+            border-radius: 8px;
+            overflow: hidden;
+            background-color: white;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: var(--transition);
+        }
+
+        .portfolio-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .portfolio-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .portfolio-details {
+            padding: 1.5rem;
+        }
+
+        .portfolio-details h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+
+        .portfolio-details p {
+            color: var(--gray-text);
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+        }
+
+        /* COURSES SECTION */
+        .courses-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .courses-list {
+            list-style: none;
+            margin: 2rem 0;
+        }
+
+        .courses-list li {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
+        }
+
+        .course-icon {
+            font-size: 1.5rem;
+            margin-right: 1rem;
+            background-color: var(--light-bg);
+            padding: 0.5rem;
+            border-radius: 50%;
+            display: inline-block;
+            min-width: 50px;
+            height: 50px;
+            text-align: center;
+            line-height: 2;
+        }
+
+        .course-details h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.25rem;
+            color: var(--primary-color);
+        }
+
+        .course-details p {
+            color: var(--gray-text);
+            font-size: 0.95rem;
+        }
+
+        .courses-image img {
+            width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        /* CONTACT SECTION */
+        .contact-content {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 3rem;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .contact-method {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .contact-icon {
+            font-size: 1.5rem;
+            color: var(--secondary-color);
+        }
+
+        .contact-form {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group:nth-child(3) {
+            grid-column: span 2;
+        }
+
+        .form-group:last-child {
+            grid-column: span 2;
+        }
+
+        .form-group label {
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--primary-color);
+        }
+
+        .form-group input,
+        .form-group textarea {
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-family: 'Roboto', sans-serif;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+        }
+
+        .form-group textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        /* FOOTER */
+        footer {
+            background-color: var(--primary-color);
+            color: var(--light-text);
+            padding: 2rem;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .social-links a {
+            color: var(--light-text);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            color: var(--secondary-color);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .about-content,
+            .courses-content,
+            .contact-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .hero-title {
+                font-size: 3rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.5rem;
+            }
+
+            .hero-intro {
+                flex-direction: column;
+                text-align: center;
+                gap: 2rem;
+            }
+
+            .hero-profile {
+                order: -1;
+            }
+
+            .profile-image {
+                width: 250px;
+                height: 250px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: row;
+                padding: 1rem 2rem;
+            }
+            
+            header h1 {
+                margin-bottom: 0;
+            }
+
+            .burger-menu {
+                display: flex;
+            }
+            
+            nav {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 70%;
+                height: 100vh;
+                background-color: var(--primary-color);
+                transition: right 0.3s ease;
+                padding-top: 80px;
+                box-shadow: -2px 0 10px rgba(0, 0, 0, 0.2);
+            }
+
+            nav.active {
+                right: 0;
+            }
+
+            nav ul {
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 2rem;
+            }
+            
+            nav ul li {
+                margin: 1rem 0;
+                width: 100%;
+            }
+
+            nav ul li a {
+                font-size: 1.2rem;
+                display: block;
+                padding: 0.5rem 0;
+            }
+            
+            .portfolio-gallery {
+                grid-template-columns: 1fr;
+            }
+            
+            .contact-form {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-group:nth-child(3) {
+                grid-column: span 1;
+            }
+            
+            .footer-container {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+            
+            .social-links {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- HEADER avec menu -->
+    <header id="header">
+        <div class="header-container">
+            <h1>Léopold MDT</h1>
+            <div class="burger-menu" id="burgerMenu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <nav id="nav">
+                <ul>
+                    <li><a href="#about">À propos</a></li>
+                    <li><a href="#portfolio">Portfolio</a></li>
+                    <li><a href="#courses">Cours</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- SECTION ACCUEIL -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-intro">
+                <div class="hero-text">
+                    <h1 class="hero-title">Data Analyst</h1>
+                    <div class="hero-subtitle">Transformation des données en <span class="highlight">solutions digitales</span></div>
+                    <p class="hero-description">
+                        Je transforme des données complexes en visualisations claires et en analyses exploitables pour aider les entreprises à prendre des décisions éclairées.
+                        Les technologies que j'utilise incluent SQL, Python et Power BI. Découvrez mon travail dans mon portfolio ou contactez-moi directement.
+                    </p>
+                    <div class="hero-buttons">
+                        <a href="#portfolio" class="btn btn-secondary">Voir mon travail</a>
+                        <a href="#contact" class="btn btn-secondary">Me contacter</a>
+                    </div>
+                </div>
+                <div class="hero-profile">
+                    <img src="photo_site.jpeg" alt="Léopold - Data Analyst" class="profile-image">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION À PROPOS -->
+    <section id="about" class="section">
+        <div class="section-container">
+            <div class="section-header">
+                <span class="section-label">01</span>
+                <h2>À propos</h2>
+            </div>
+            <div class="about-content">
+                <div class="about-text-wrapper">
+                    <div class="about-text">
+                        <p>Data Analyst passionné par la transformation des données brutes en insights stratégiques. Je combine des compétences techniques en SQL, Python et Power BI avec une solide compréhension des enjeux business.</p>
+                        <p>Mon approche se concentre sur la création de visualisations claires et d'analyses actionnables pour aider les organisations à prendre des décisions basées sur les données.</p>
+                    </div>
+                    <a href="cv_leopold.pdf" download class="btn btn-primary">📄 Télécharger mon CV</a>
+                </div>
+                <div class="about-skills">
+                    <div class="skill">
+                        <div class="skill-name">SQL</div>
+                        <div class="skill-bar"><div class="skill-level" style="width: 90%"></div></div>
+                    </div>
+                    <div class="skill">
+                        <div class="skill-name">Python</div>
+                        <div class="skill-bar"><div class="skill-level" style="width: 85%"></div></div>
+                    </div>
+                    <div class="skill">
+                        <div class="skill-name">Power BI</div>
+                        <div class="skill-bar"><div class="skill-level" style="width: 95%"></div></div>
+                    </div>
+                    <div class="skill">
+                        <div class="skill-name">Data Visualization</div>
+                        <div class="skill-bar"><div class="skill-level" style="width: 88%"></div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION PORTFOLIO -->
+    <section id="portfolio" class="section">
+        <div class="section-container">
+            <div class="section-header">
+                <span class="section-label">02</span>
+                <h2>Portfolio</h2>
+            </div>
+            <p class="section-intro">Découvrez mes projets en Data Analysis et Data Visualization.</p>
+            <div class="portfolio-gallery">
+                <div class="portfolio-item">
+                    <img src="img/powerbi1.png" alt="Dashboard Power BI" width="500" height="500">
+                    <div class="portfolio-details">
+                        <h3>Dashboard Power BI</h3>
+                        <p>Analyse des ventes et prévisions pour une entreprise de retail</p>
+                        <a href="public/projet_template.html" class="btn btn-small">Voir le projet</a>
+                    </div>
+                </div>
+                <div class="portfolio-item">
+                    <img src="img/powerbi2.png" alt="Analyse prédictive" width="500" height="500">
+                    <div class="portfolio-details">
+                        <h3>Analyse prédictive</h3>
+                        <p>Modèle de prédiction des tendances clients avec Python</p>
+                        <a href="public/projet_template.html" class="btn btn-small">Voir le projet</a>
+                    </div>
+                </div>
+                <div class="portfolio-item">
+                    <img src="img/powerbi3.png" alt="Visualisation interactive" width="500" height="500">
+                    <div class="portfolio-details">
+                        <h3>Visualisation interactive</h3>
+                        <p>Tableau de bord interactif pour l'analyse des KPIs marketing</p>
+                        <a href="#" class="btn btn-small">Voir le projet</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION COURS -->
+    <section id="courses" class="section">
+        <div class="section-container">
+            <div class="section-header">
+                <span class="section-label">03</span>
+                <h2>Cours particuliers</h2>
+            </div>
+            <div class="courses-content">
+                <div class="courses-text">
+                    <p>Je propose des formations personnalisées pour développer vos compétences en analyse de données et visualisation.</p>
+                    <ul class="courses-list">
+                        <li>
+                            <span class="course-icon">🔍</span>
+                            <div class="course-details">
+                                <h3>SQL pour l'analyse de données</h3>
+                                <p>Apprenez à extraire et manipuler des données efficacement</p>
+                            </div>
+                        </li>
+                        <li>
+                            <span class="course-icon">🐍</span>
+                            <div class="course-details">
+                                <h3>Python pour Data Scientists</h3>
+                                <p>Maîtrisez pandas, numpy et matplotlib pour l'analyse de données</p>
+                            </div>
+                        </li>
+                        <li>
+                            <span class="course-icon">📊</span>
+                            <div class="course-details">
+                                <h3>Dashboards avec Power BI</h3>
+                                <p>Créez des visualisations interactives et impactantes</p>
+                            </div>
+                        </li>
+                    </ul>
+                    <a href="#contact" class="btn btn-primary">Demander plus d'informations</a>
+                </div>
+                <div class="courses-image">
+                    <img src="img/cours.jpg" alt="Cours en ligne">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION CONTACT -->
+    <section id="contact" class="section">
+        <div class="section-container">
+            <div class="section-header">
+                <span class="section-label">04</span>
+                <h2>Contact</h2>
+            </div>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <p>Vous avez un projet en tête ou une question ? N'hésitez pas à me contacter.</p>
+                    <div class="contact-method">
+                        <span class="contact-icon">✉️</span>
+                        <span class="contact-detail">leopold.deterline@gmail.com</span>
+                    </div>
+                    <div class="contact-method">
+                        <span class="contact-icon">📱</span>
+                        <span class="contact-detail">+33 7 68 23 94 30</span>
+                    </div>
+                </div>
+                <form class="contact-form">
+                    <div class="form-group">
+                        <label for="name">Nom</label>
+                        <input type="text" id="name" placeholder="Votre nom" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" placeholder="Votre email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" placeholder="Votre message" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Envoyer</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-container">
+            <p>&copy; 2025 Léopold Macquart de Terline - Tous droits réservés.</p>
+            <div class="social-links">
+                <a href="https://www.linkedin.com/in/l%C3%A9opold-macquart-de-terline-b99423235/" aria-label="LinkedIn">LinkedIn</a>
+                <a href="https://github.com/Leop250/" aria-label="GitHub">GitHub</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Menu burger
+        const burgerMenu = document.getElementById('burgerMenu');
+        const nav = document.getElementById('nav');
+        const navLinks = document.querySelectorAll('nav ul li a');
+
+        burgerMenu.addEventListener('click', () => {
+            burgerMenu.classList.toggle('active');
+            nav.classList.toggle('active');
+        });
+
+        // Fermer le menu lors du clic sur un lien
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                burgerMenu.classList.remove('active');
+                nav.classList.remove('active');
+            });
+        });
+
+        // Fermer le menu si on clique en dehors
+        document.addEventListener('click', (e) => {
+            if (!nav.contains(e.target) && !burgerMenu.contains(e.target)) {
+                burgerMenu.classList.remove('active');
+                nav.classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html>
