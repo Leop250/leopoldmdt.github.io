@@ -559,6 +559,21 @@ footer {
     height: 250px;
   }
 
+  .hero-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .hero-buttons .btn {
+    width: 100%;
+    max-width: 300px;
+  }
+
+  .hero-description {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
   /* Ajustements mobile pour la section À propos */
   .about-text-wrapper {
     text-align: center;
@@ -615,6 +630,39 @@ footer {
     font-size: 1.2rem;
     display: block;
     padding: 0.5rem 0;
+  }
+
+  .hero {
+    padding: 0 1rem;
+    min-height: 100vh;
+    height: auto;
+  }
+
+  .hero-content {
+    padding-top: 6rem;
+    padding-bottom: 2rem;
+  }
+
+  .hero-title {
+    font-size: 2.5rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1.3rem;
+  }
+
+  .profile-image {
+    width: 200px;
+    height: 200px;
+  }
+
+  .hero-buttons {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .hero-buttons .btn {
+    width: 100%;
   }
   
   .portfolio-gallery {
