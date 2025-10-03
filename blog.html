@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog - Léopold Macquart de Terline</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Roboto+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Styles spécifiques pour le blog */
+        .blog-hero {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #34495e 100%);
+            padding: 8rem 2rem 4rem 2rem;
+            text-align: center;
+            color: var(--light-text);
+        }
+
+        .blog-hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .blog-hero p {
+            font-size: 1.3rem;
+            max-width: 700px;
+            margin: 0 auto;
+            opacity: 0.9;
+        }
+
+        /* Filtres */
+        .blog-filters {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 3rem 0;
+        }
+
+        .filter-btn {
+            padding: 0.6rem 1.5rem;
+            border: 2px solid var(--primary-color);
+            background: white;
+            color: var(--primary-color);
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        /* Articles du blog */
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2.5rem;
+            margin-top: 3rem;
+        }
+
+        .blog-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .blog-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .blog-card-image {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+        }
+
+        .blog-card-content {
+            padding: 2rem;
+        }
+
+        .blog-category {
+            display: inline-block;
+            background: var(--secondary-color);
+            color: white;
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            margin-bottom: 1rem;
+        }
+
+        .blog-category.data-viz {
+            background: #3498DB;
+        }
+
+        .blog-category.python {
+            background: #F39C12;
+        }
+
+        .blog-category.sql {
+            background: #9B59B6;
+        }
+
+        .blog-category.perso {
+            background: #E74C3C;
+        }
+
+        .blog-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.8rem;
+            color: var(--primary-color);
+        }
+
+        .blog-excerpt {
+            color: var(--gray-text);
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+        }
+
+        .blog-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.9rem;
+            color: var(--gray-text);
+            padding-top: 1rem;
+            border-top: 1px solid #eee;
+        }
+
+        .blog-date {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .read-time {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* Article en vedette */
+        .featured-post {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            margin-bottom: 4rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+        }
+
+        .featured-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .featured-content {
+            padding: 3rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .featured-label {
+            color: var(--secondary-color);
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 1rem;
+        }
+
+        .featured-content h2 {
+            font-size: 2.2rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        .featured-content p {
+            color: var(--gray-text);
+            line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+
+        /* Newsletter */
+        .newsletter-section {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #34495e 100%);
+            padding: 4rem 2rem;
+            border-radius: 12px;
+            margin: 4rem 0;
+            text-align: center;
+            color: white;
+        }
+
+        .newsletter-section h3 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .newsletter-section p {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .newsletter-form {
+            display: flex;
+            gap: 1rem;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .newsletter-form input {
+            flex: 1;
+            padding: 1rem;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+        }
+
+        .newsletter-form button {
+            padding: 1rem 2rem;
+            background: var(--secondary-color);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .newsletter-form button:hover {
+            background: #c0392b;
+            transform: translateY(-2px);
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .featured-post {
+                grid-template-columns: 1fr;
+            }
+
+            .featured-content {
+                padding: 2rem;
+            }
+
+            .blog-hero h1 {
+                font-size: 2.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .blog-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .newsletter-form {
+                flex-direction: column;
+            }
+
+            .blog-hero {
+                padding: 6rem 1rem 3rem 1rem;
+            }
+
+            .blog-hero h1 {
+                font-size: 2rem;
+            }
+
+            .blog-hero p {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- HEADER avec menu -->
+    <header id="header">
+        <div class="header-container">
+            <h1>Léopold MDT</h1>
+            <div class="burger-menu" id="burgerMenu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <nav id="nav">
+                <ul>
+                    <li><a href="index.html">Accueil</a></li>
+                    <li><a href="index.html#about">À propos</a></li>
+                    <li><a href="index.html#portfolio">Portfolio</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                    <li><a href="index.html#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- HERO BLOG -->
+    <section class="blog-hero">
+        <h1>Mon Blog</h1>
+        <p>Découvrez mes réflexions sur la data, mes projets, et mes centres d'intérêt</p>
+    </section>
+
+    <!-- CONTENU PRINCIPAL -->
+    <section class="section">
+        <div class="section-container">
+            
+            <!-- Article en vedette -->
+            <div class="featured-post">
+                <img src="img/featured-blog.jpg" alt="Article en vedette" class="featured-image">
+                <div class="featured-content">
+                    <span class="featured-label">✨ Article en vedette</span>
+                    <span class="blog-category data-viz">Data Visualization</span>
+                    <h2>Comment créer des dashboards impactants avec Power BI</h2>
+                    <p>Les dashboards sont essentiels pour communiquer efficacement avec les données. Dans cet article, je partage mes meilleures pratiques pour créer des visualisations qui racontent une histoire et aident à la prise de décision.</p>
+                    <div class="blog-meta">
+                        <span class="blog-date">📅 15 Mars 2025</span>
+                        <span class="read-time">⏱️ 8 min de lecture</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Filtres -->
+            <div class="blog-filters">
+                <button class="filter-btn active" data-filter="all">Tous</button>
+                <button class="filter-btn" data-filter="data-viz">Data Viz</button>
+                <button class="filter-btn" data-filter="python">Python</button>
+                <button class="filter-btn" data-filter="sql">SQL</button>
+                <button class="filter-btn" data-filter="perso">Personnel</button>
+            </div>
+
+            <!-- Grille des articles -->
+            <div class="blog-grid">
+                
+                <!-- Article 1 -->
+                <article class="blog-card" data-category="python">
+                    <img src="img/blog-python.jpg" alt="Python pour la data" class="blog-card-image">
+                    <div class="blog-card-content">
+                        <span class="blog-category python">Python</span>
+                        <h3>Les meilleures librairies Python pour l'analyse de données</h3>
+                        <p class="blog-excerpt">Pandas, NumPy, Matplotlib... Découvrez les outils essentiels que tout Data Analyst devrait maîtriser pour être efficace au quotidien.</p>
+                        <div class="blog-meta">
+                            <span class="blog-date">📅 10 Mars 2025</span>
+                            <span class="read-time">⏱️ 6 min</span>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Article 2 -->
+                <article class="blog-card" data-category="sql">
+                    <img src="img/blog-sql.jpg" alt="Optimisation SQL" class="blog-card-image">
+                    <div class="blog-card-content">
+                        <span class="blog-category sql">SQL</span>
+                        <h3>Optimiser ses requêtes SQL : mes astuces</h3>
+                        <p class="blog-excerpt">Comment passer de requêtes lentes à des performances optimales ? Je partage mes techniques d'optimisation SQL testées en production.</p>
+                        <div class="blog-meta">
+                            <span class="blog-date">📅 5 Mars 2025</span>
+                            <span class="read-time">⏱️ 7 min</span>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Article 3 -->
+                <article class="blog-card" data-category="perso">
+                    <img src="img/blog-perso.jpg" alt="Reconversion" class="blog-card-image">
+                    <div class="blog-card-content">
+                        <span class="blog-category perso">Personnel</span>
+                        <h3>Mon parcours vers la Data Analysis</h3>
+                        <p class="blog-excerpt">De mes débuts jusqu'à aujourd'hui, je raconte comment je suis devenu Data Analyst et les défis que j'ai rencontrés en chemin.</p>
+                        <div class="blog-meta">
+                            <span class="blog-date">📅 28 Fév 2025</span>
+                            <span class="read-time">⏱️ 5 min</span>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Article 4 -->
+                <article class="blog-card" data-category="data-viz">
+                    <img src="img/blog-viz.jpg" alt="Couleurs en data viz" class="blog-card-image">
+                    <div class="blog-card-content">
+                        <span class="blog-category data-viz">Data Visualization</span>
+                        <h3>Le pouvoir des couleurs dans la data visualization</h3>
+                        <p class="blog-excerpt">Les couleurs ne sont pas qu'une question d'esthétique. Apprenez à les utiliser pour guider l'attention et améliorer la compréhension.</p>
+                        <div class="blog-meta">
+                            <span class="blog-date">📅 20 Fév 2025</span>
+                            <span class="read-time">⏱️ 6 min</span>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Article 5 -->
+                <article class="blog-card" data-category="python">
+                    <img src="img/blog-automation.jpg" alt="Automatisation" class="blog-card-image">
+                    <div class="blog-card-content">
+                        <span class="blog-category python">Python</span>
+                        <h3>Automatiser ses rapports avec Python</h3>
+                        <p class="blog-excerpt">Gagnez du temps en automatisant vos rapports récurrents. Un guide pratique pour créer des scripts d'automatisation efficaces.</p>
+                        <div class="blog-meta">
+                            <span class="blog-date">📅 12 Fév 2025</span>
+                            <span class="read-time">⏱️ 9 min</span>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Article 6 -->
+                <article class="blog-card" data-category="perso">
+                    <img src="img/blog-books.jpg" alt="Livres recommandés" class="blog-card-image">
+                    <div class="blog-card-content">
+                        <span class="blog-category perso">Personnel</span>
+                        <h3>Mes 5 livres incontournables sur la data</h3>
+                        <p class="blog-excerpt">Ma sélection personnelle des meilleurs ouvrages pour approfondir ses connaissances en data analysis et développer son mindset analytique.</p>
+                        <div class="blog-meta">
+                            <span class="blog-date">📅 8 Fév 2025</span>
+                            <span class="read-time">⏱️ 4 min</span>
+                        </div>
+                    </div>
+                </article>
+
+            </div>
+
+            <!-- Newsletter -->
+            <div class="newsletter-section">
+                <h3>📬 Restez informé</h3>
+                <p>Recevez mes derniers articles directement dans votre boîte mail</p>
+                <form class="newsletter-form">
+                    <input type="email" placeholder="Votre adresse email" required>
+                    <button type="submit">S'abonner</button>
+                </form>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-container">
+            <p>&copy; 2025 Léopold Macquart de Terline - Tous droits réservés.</p>
+            <div class="social-links">
+                <a href="https://www.linkedin.com/in/l%C3%A9opold-macquart-de-terline-b99423235/" aria-label="LinkedIn">LinkedIn</a>
+                <a href="https://github.com/Leop250/" aria-label="GitHub">GitHub</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Menu burger
+        const burgerMenu = document.getElementById('burgerMenu');
+        const nav = document.getElementById('nav');
+        const navLinks = document.querySelectorAll('nav ul li a');
+
+        burgerMenu.addEventListener('click', () => {
+            burgerMenu.classList.toggle('active');
+            nav.classList.toggle('active');
+        });
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                burgerMenu.classList.remove('active');
+                nav.classList.remove('active');
+            });
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!nav.contains(e.target) && !burgerMenu.contains(e.target)) {
+                burgerMenu.classList.remove('active');
+                nav.classList.remove('active');
+            }
+        });
+
+        // Filtres du blog
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const blogCards = document.querySelectorAll('.blog-card');
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Retirer la classe active de tous les boutons
+                filterBtns.forEach(b => b.classList.remove('active'));
+                // Ajouter la classe active au bouton cliqué
+                btn.classList.add('active');
+
+                const filter = btn.dataset.filter;
+
+                blogCards.forEach(card => {
+                    if (filter === 'all' || card.dataset.category === filter) {
+                        card.style.display = 'block';
+                        setTimeout(() => {
+                            card.style.opacity = '1';
+                            card.style.transform = 'scale(1)';
+                        }, 10);
+                    } else {
+                        card.style.opacity = '0';
+                        card.style.transform = 'scale(0.9)';
+                        setTimeout(() => {
+                            card.style.display = 'none';
+                        }, 300);
+                    }
+                });
+            });
+        });
+
+        // Animation au scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        blogCards.forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+            observer.observe(card);
+        });
+
+        // Newsletter form
+        document.querySelector('.newsletter-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Merci pour votre inscription ! 🎉');
+            e.target.reset();
+        });
+    </script>
+</body>
+</html>
