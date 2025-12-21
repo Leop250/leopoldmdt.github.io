@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Power BI - Léopold Macquart de Terline</title>
+    <title>Hackathon IA – Prédiction de la note d’un intervenant</title>
     <link rel="stylesheet" href="style_project_2.css">
 </head>
 <body>
@@ -25,30 +25,33 @@
     <!-- PROJECT HERO -->
     <section class="project-hero">
         <div class="project-hero-content">
-            <h1 class="project-title">Dashboard Power BI</h1>
-            <p class="project-subtitle">Analyse des ventes et prévisions pour une entreprise de retail</p>
+            <h1 class="project-title">Hackathon – Prédiction de la note d’un intervenant</h1>
+            <p class="project-subtitle">
+                Modèle de machine learning basé sur l’analyse automatique de CV – Station F, Paris
+            </p>
             
             <div class="project-meta">
                 <div class="meta-item">
-                    <span class="meta-label">Client</span>
-                    <span class="meta-value">Retail Solutions Inc.</span>
+                    <span class="meta-label">Organisateur</span>
+                    <span class="meta-value">Educentre</span>
                 </div>
                 <div class="meta-item">
-                    <span class="meta-label">Année</span>
-                    <span class="meta-value">2024</span>
+                    <span class="meta-label">Lieu</span>
+                    <span class="meta-value">Station F, Paris</span>
                 </div>
                 <div class="meta-item">
-                    <span class="meta-label">Durée</span>
-                    <span class="meta-value">3 mois</span>
+                    <span class="meta-label">Cadre</span>
+                    <span class="meta-value">Hackathon</span>
                 </div>
             </div>
 
             <div class="project-tags">
-                <span class="tag">Power BI</span>
-                <span class="tag">SQL</span>
-                <span class="tag">DAX</span>
-                <span class="tag">Data Modeling</span>
-                <span class="tag">Business Intelligence</span>
+                <span class="tag">Python</span>
+                <span class="tag">Machine Learning</span>
+                <span class="tag">NLP</span>
+                <span class="tag">TF-IDF</span>
+                <span class="tag">BigQuery</span>
+                <span class="tag">Data Science</span>
             </div>
         </div>
     </section>
@@ -60,9 +63,16 @@
         <!-- Vue d'ensemble -->
         <section class="content-section">
             <h2 class="section-title">Vue d'ensemble</h2>
-            <img src="../img/powerbi1.png" alt="Dashboard Power BI" class="project-image">
-            <p>Ce projet consistait à créer un tableau de bord interactif et complet pour une entreprise de retail cherchant à optimiser ses performances commerciales. L'objectif principal était de centraliser les données de ventes provenant de multiples sources et de fournir des insights actionnables en temps réel.</p>
-            <p>Le dashboard permet aux équipes de direction de suivre les KPIs clés, d'identifier les tendances de vente, et de prendre des décisions basées sur les données pour améliorer la performance globale de l'entreprise.</p>
+            <img src="../img/hackathon1.png" alt="Hackathon IA Station F" class="project-image">
+            <p>
+                Ce projet a été réalisé dans le cadre d’un hackathon organisé par Educentre à Station F. 
+                L’objectif était de développer un modèle de machine learning capable d’estimer la note d’un intervenant 
+                à partir de son CV, en s’appuyant sur des techniques de traitement du langage naturel (NLP).
+            </p>
+            <p>
+                La solution vise à aider à la sélection et à l’évaluation d’intervenants en automatisant l’analyse 
+                de profils, tout en garantissant une approche objective et basée sur les données.
+            </p>
         </section>
 
         <!-- Contexte et défis -->
@@ -71,16 +81,19 @@
             <div class="two-columns">
                 <div>
                     <h3>Contexte</h3>
-                    <p>L'entreprise disposait de données fragmentées dans plusieurs systèmes (ERP, CRM, fichiers Excel) sans vision consolidée. Les rapports manuels prenaient plusieurs jours à produire et étaient souvent obsolètes lors de leur publication.</p>
+                    <p>
+                        Educentre disposait de données hétérogènes sur les intervenants (CV, notes historiques, informations textuelles).
+                        L’enjeu était de transformer ces données non structurées en variables exploitables par un modèle prédictif.
+                    </p>
                 </div>
                 <div>
                     <h3>Défis principaux</h3>
                     <ul class="feature-list">
-                        <li>Intégration de sources de données hétérogènes</li>
-                        <li>Nettoyage et normalisation des données historiques</li>
-                        <li>Création de modèles de prévision fiables</li>
-                        <li>Interface intuitive pour utilisateurs non-techniques</li>
-                        <li>Performance optimale avec de gros volumes de données</li>
+                        <li>Traitement automatique de CV non structurés</li>
+                        <li>Nettoyage et vectorisation de texte</li>
+                        <li>Choix d’un modèle pertinent en temps limité</li>
+                        <li>Gestion et centralisation des données sur BigQuery</li>
+                        <li>Automatisation de la collecte de CV</li>
                     </ul>
                 </div>
             </div>
@@ -89,26 +102,25 @@
         <!-- Solution mise en œuvre -->
         <section class="content-section">
             <h2 class="section-title">Solution mise en œuvre</h2>
-            <p>J'ai développé une solution complète en plusieurs phases :</p>
+            <p>J’ai contribué au développement d’une solution complète, de la collecte des données jusqu’au modèle prédictif :</p>
             
             <div class="two-columns">
                 <div>
-                    <h3>Architecture des données</h3>
+                    <h3>Pipeline data & IA</h3>
                     <ul class="feature-list">
-                        <li>Connexion directe aux bases de données SQL</li>
-                        <li>Modèle en étoile optimisé</li>
-                        <li>Mesures DAX complexes pour les calculs</li>
-                        <li>Actualisation automatique quotidienne</li>
+                        <li>Scraping automatisé de CV via Python</li>
+                        <li>Stockage et gestion des données sur BigQuery</li>
+                        <li>Préparation et nettoyage des données avec pandas</li>
+                        <li>Vectorisation des textes avec TF-IDF</li>
                     </ul>
                 </div>
                 <div>
-                    <h3>Fonctionnalités clés</h3>
+                    <h3>Machine Learning</h3>
                     <ul class="feature-list">
-                        <li>Vue d'ensemble des ventes en temps réel</li>
-                        <li>Analyse géographique interactive</li>
-                        <li>Prévisions basées sur l'historique</li>
-                        <li>Analyse comparative par période</li>
-                        <li>Filtres dynamiques et drill-down</li>
+                        <li>Construction de features textuelles</li>
+                        <li>Entraînement d’un modèle de prédiction de note</li>
+                        <li>Évaluation des performances du modèle</li>
+                        <li>Interprétation des résultats</li>
                     </ul>
                 </div>
             </div>
@@ -116,36 +128,29 @@
 
         <!-- Résultats -->
         <section class="content-section">
-            <h2 class="section-title">Résultats et impact</h2>
+            <h2 class="section-title">Résultats et apprentissages</h2>
             <div class="stats-grid">
                 <div class="stat-card">
-                    <div class="stat-number">85%</div>
-                    <div class="stat-label">Réduction du temps de reporting</div>
+                    <div class="stat-number">NLP</div>
+                    <div class="stat-label">Analyse de CV automatisée</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-number">15%</div>
-                    <div class="stat-label">Amélioration des marges</div>
+                    <div class="stat-number">ML</div>
+                    <div class="stat-label">Modèle prédictif fonctionnel</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-number">30+</div>
-                    <div class="stat-label">Utilisateurs quotidiens</div>
+                    <div class="stat-number">BQ</div>
+                    <div class="stat-label">Centralisation des données</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-number">92%</div>
-                    <div class="stat-label">Précision des prévisions</div>
+                    <div class="stat-number">Hackathon</div>
+                    <div class="stat-label">Travail en équipe & contraintes temps</div>
                 </div>
             </div>
-            <p style="margin-top: 2rem;">Le dashboard est devenu un outil central dans le processus décisionnel de l'entreprise. Les managers peuvent maintenant identifier rapidement les opportunités et les problèmes, permettant une réaction plus agile aux changements du marché.</p>
-        </section>
-
-        <!-- Galerie d'images -->
-        <section class="content-section">
-            <h2 class="section-title">Aperçus du dashboard</h2>
-            <div class="gallery">
-                <img src="../img/powerbi1.png" alt="Vue principale">
-                <img src="../img/powerbi2.png" alt="Analyse géographique">
-                <img src="../img/powerbi3.png" alt="Prévisions">
-            </div>
+            <p style="margin-top: 2rem;">
+                Ce projet m’a permis de renforcer mes compétences en NLP, en machine learning et en data engineering, 
+                tout en travaillant dans un contexte réel, collaboratif et sous forte contrainte de temps.
+            </p>
         </section>
 
         <!-- Technologies utilisées -->
@@ -155,19 +160,19 @@
                 <div>
                     <h3>Outils techniques</h3>
                     <ul class="feature-list">
-                        <li>Microsoft Power BI Desktop & Service</li>
-                        <li>SQL Server pour l'intégration des données</li>
-                        <li>Python pour le preprocessing</li>
-                        <li>Power Query pour les transformations</li>
+                        <li>Python (pandas, scikit-learn)</li>
+                        <li>TF-IDF pour la vectorisation de texte</li>
+                        <li>Google BigQuery</li>
+                        <li>Web scraping automatisé</li>
                     </ul>
                 </div>
                 <div>
-                    <h3>Compétences appliquées</h3>
+                    <h3>Compétences développées</h3>
                     <ul class="feature-list">
-                        <li>Modélisation de données</li>
-                        <li>Développement de mesures DAX avancées</li>
-                        <li>Design UX/UI pour la Business Intelligence</li>
-                        <li>Optimisation des performances</li>
+                        <li>Traitement du langage naturel (NLP)</li>
+                        <li>Machine Learning appliqué</li>
+                        <li>Data preparation & feature engineering</li>
+                        <li>Travail en équipe en environnement hackathon</li>
                     </ul>
                 </div>
             </div>
@@ -175,8 +180,11 @@
 
         <!-- Call to action -->
         <section class="content-section" style="text-align: center;">
-            <h2 class="section-title">Intéressé par un projet similaire ?</h2>
-            <p>Je serais ravi de discuter de votre projet de Business Intelligence et d'analyse de données.</p>
+            <h2 class="section-title">Envie d’en savoir plus ?</h2>
+            <p>
+                Le projet est disponible sur mon portfolio et GitHub.  
+                Je serais ravi d’échanger sur ce hackathon ou sur des projets similaires en data et IA.
+            </p>
             <div style="margin-top: 2rem; display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
                 <a href="index.html#contact" class="btn btn-primary">Me contacter</a>
                 <a href="index.html#portfolio" class="btn btn-secondary">Voir d'autres projets</a>
