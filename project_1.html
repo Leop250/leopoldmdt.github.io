@@ -1,206 +1,531 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" data-theme="light">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hackathon IA – Prédiction de la note d’un intervenant</title>
-    <link rel="stylesheet" href="style_project_2.css">
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<meta name="description" content="Hackathon IA – Prédiction de la note d'un intervenant · Léopold Macquart de Terline"/>
+<title>Hackathon · Prédiction intervenant — Léopold MDT</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+[data-theme="light"]{
+  --bg:#ffffff;--bg-gray:#f5f5f7;--bg-dark:#1d1d1f;
+  --text:#1d1d1f;--text-secondary:#6e6e73;--text-tertiary:#aeaeb2;
+  --text-on-dark:#f5f5f7;--text-on-dark-2:#a1a1a6;
+  --border:rgba(0,0,0,0.08);--blue:#0071e3;--blue-dark:#0077ed;
+  --blue-tint:rgba(0,113,227,0.1);--green:#1d8348;
+  --nav-bg:rgba(255,255,255,0.85);--card:#ffffff;
+}
+[data-theme="dark"]{
+  --bg:#000000;--bg-gray:#1c1c1e;--bg-dark:#f5f5f7;
+  --text:#f5f5f7;--text-secondary:#a1a1a6;--text-tertiary:#636366;
+  --text-on-dark:#1d1d1f;--text-on-dark-2:#6e6e73;
+  --border:rgba(255,255,255,0.1);--blue:#2997ff;--blue-dark:#47a8ff;
+  --blue-tint:rgba(41,151,255,0.12);--green:#30d158;
+  --nav-bg:rgba(0,0,0,0.85);--card:#1c1c1e;
+}
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
+body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif;font-size:17px;line-height:1.6;overflow-x:hidden;transition:background .3s,color .3s}
+::selection{background:var(--blue);color:#fff}
+a{text-decoration:none;color:inherit}
+img{display:block;max-width:100%;height:auto}
+
+/* PROGRESS */
+#prog{position:fixed;top:0;left:0;height:2px;width:0;background:var(--blue);z-index:500;transition:width .08s}
+
+/* BTT */
+#btt{position:fixed;bottom:2rem;right:2rem;z-index:90;width:36px;height:36px;border-radius:50%;background:rgba(0,0,0,.5);backdrop-filter:blur(10px);color:#fff;border:none;cursor:pointer;font-size:.85rem;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .2s,transform .2s}
+[data-theme="dark"] #btt{background:rgba(255,255,255,.15)}
+#btt.show{opacity:1;pointer-events:auto}
+#btt:hover{transform:scale(1.1)}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:400;height:48px;display:flex;align-items:center;justify-content:space-between;padding:0 1.5rem;background:var(--nav-bg);backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid var(--border);transition:background .3s}
+.nav-logo{font-size:.9rem;font-weight:600;color:var(--text);letter-spacing:-.01em}
+.nav-links{position:absolute;left:50%;transform:translateX(-50%);display:flex;gap:1.8rem;list-style:none}
+.nav-links a{font-size:.8rem;color:var(--text-secondary);transition:color .15s}
+.nav-links a:hover{color:var(--text)}
+.nav-actions{display:flex;align-items:center;gap:.75rem}
+.theme-toggle{display:flex;align-items:center;gap:7px;background:var(--bg-gray);border:1px solid var(--border);border-radius:100px;padding:4px 12px 4px 8px;cursor:pointer;font-size:.75rem;color:var(--text-secondary);transition:background .2s;white-space:nowrap}
+.theme-toggle:hover{background:var(--border)}
+.toggle-track{width:28px;height:16px;border-radius:100px;background:var(--text-tertiary);position:relative;transition:background .3s;flex-shrink:0}
+[data-theme="dark"] .toggle-track{background:var(--blue)}
+.toggle-knob{position:absolute;top:2px;left:2px;width:12px;height:12px;border-radius:50%;background:#fff;transition:transform .3s}
+[data-theme="dark"] .toggle-knob{transform:translateX(12px)}
+.burger{display:none;flex-direction:column;gap:4px;background:none;border:none;cursor:pointer;padding:4px}
+.burger span{display:block;height:1.5px;background:var(--text);border-radius:2px;transition:transform .25s,opacity .25s}
+.burger span:nth-child(1){width:18px}
+.burger span:nth-child(2){width:13px;margin-left:auto}
+.burger span:nth-child(3){width:18px}
+.burger.open span:nth-child(1){transform:translateY(5.5px) rotate(45deg);width:18px}
+.burger.open span:nth-child(2){opacity:0}
+.burger.open span:nth-child(3){transform:translateY(-5.5px) rotate(-45deg)}
+.mob{display:none;position:fixed;inset:0;z-index:350;background:var(--bg);flex-direction:column;align-items:center;justify-content:center;gap:2rem;opacity:0;transition:opacity .22s;padding-top:48px}
+.mob.open{opacity:1}
+.mob a{font-size:1.55rem;font-weight:600;color:var(--text);letter-spacing:-.02em;transition:color .15s}
+.mob a:hover{color:var(--blue)}
+.mob hr{width:40px;border:none;border-top:1px solid var(--border);margin:.25rem 0}
+.mob-theme{display:flex;align-items:center;gap:10px;font-size:.8rem;color:var(--text-secondary)}
+
+/* LAYOUT */
+.s-white{background:var(--bg)}
+.s-gray{background:var(--bg-gray)}
+.s-black{background:#1d1d1f;color:#f5f5f7}
+[data-theme="dark"] .s-black{background:#f5f5f7;color:#1d1d1f}
+.pad{padding:7rem 1.5rem}
+.pad-sm{padding:5rem 1.5rem}
+.wrap{max-width:980px;margin:0 auto}
+.wrap-sm{max-width:720px;margin:0 auto}
+
+/* HERO PROJECT */
+.proj-hero{
+  padding:8rem 1.5rem 5rem;
+  background:var(--bg);
+  border-bottom:1px solid var(--border);
+}
+.back-link{
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:.8rem;color:var(--text-secondary);margin-bottom:2.5rem;
+  transition:color .15s;
+}
+.back-link:hover{color:var(--blue)}
+.back-link svg{width:14px;height:14px;stroke:currentColor;fill:none;transition:transform .15s}
+.back-link:hover svg{transform:translateX(-3px)}
+.proj-eyebrow{
+  font-size:.75rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--blue);margin-bottom:1rem;
+}
+.proj-hero-title{
+  font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif;
+  font-size:clamp(2.4rem,5vw,4.2rem);font-weight:700;
+  letter-spacing:-.04em;line-height:1.05;color:var(--text);
+  margin-bottom:1.25rem;
+}
+.proj-hero-title em{font-style:normal;color:var(--blue)}
+.proj-hero-desc{
+  font-size:clamp(1rem,2vw,1.25rem);color:var(--text-secondary);
+  max-width:600px;line-height:1.7;margin-bottom:2.5rem;
+}
+.meta-row{
+  display:flex;gap:2rem;flex-wrap:wrap;
+  padding-top:2rem;border-top:1px solid var(--border);
+}
+.meta-item{}
+.meta-label{font-size:.65rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--text-tertiary);margin-bottom:.25rem}
+.meta-val{font-size:.88rem;color:var(--text);font-weight:500}
+.chip-row{display:flex;gap:.4rem;flex-wrap:wrap;margin-top:2rem}
+.chip{font-size:.72rem;font-weight:500;padding:4px 13px;border-radius:100px;background:var(--blue-tint);color:var(--blue)}
+
+/* HERO IMAGE */
+.hero-img-wrap{
+  width:100%;aspect-ratio:21/9;overflow:hidden;
+  background:var(--bg-gray);
+}
+.hero-img-wrap img{width:100%;height:100%;object-fit:cover}
+
+/* SECTION TITLES */
+.section-eyebrow{font-size:.75rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--blue);margin-bottom:1rem}
+.section-headline{font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif;font-size:clamp(1.8rem,3.5vw,2.75rem);font-weight:700;letter-spacing:-.03em;line-height:1.1;color:var(--text);margin-bottom:1.25rem}
+.section-headline em{font-style:normal;color:var(--blue)}
+.body-text{font-size:.97rem;color:var(--text-secondary);line-height:1.85;max-width:680px}
+.body-text+.body-text{margin-top:1rem}
+
+/* TWO COL */
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start}
+.two-col-3{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+
+/* CHALLENGE CARDS */
+.challenge-list{display:flex;flex-direction:column;gap:0;border-top:1px solid var(--border)}
+.challenge-item{
+  display:flex;align-items:flex-start;gap:1.5rem;
+  padding:1.75rem 0;border-bottom:1px solid var(--border);
+}
+.challenge-num{
+  font-size:.75rem;font-weight:700;color:var(--text-tertiary);
+  min-width:28px;padding-top:.15rem;
+}
+.challenge-item h3{font-size:.97rem;font-weight:600;color:var(--text);margin-bottom:.3rem;letter-spacing:-.01em}
+.challenge-item p{font-size:.88rem;color:var(--text-secondary);line-height:1.75}
+
+/* PIPELINE */
+.pipeline{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:1px;background:var(--border);
+  border:1px solid var(--border);border-radius:18px;overflow:hidden;
+}
+.pipe-step{
+  background:var(--bg);padding:2rem 1.5rem;
+  position:relative;
+}
+.s-gray .pipe-step{background:var(--bg-gray)}
+.pipe-num{
+  font-size:.65rem;font-weight:700;color:var(--blue);letter-spacing:.08em;
+  margin-bottom:.75rem;
+}
+.pipe-icon{font-size:1.75rem;margin-bottom:.75rem;display:block}
+.pipe-step h3{font-size:.92rem;font-weight:600;color:var(--text);margin-bottom:.35rem;letter-spacing:-.01em}
+.pipe-step p{font-size:.8rem;color:var(--text-secondary);line-height:1.7}
+
+/* RESULTS */
+.results-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:18px;overflow:hidden}
+.res-cell{background:var(--bg-gray);padding:2.5rem 1.5rem;text-align:center}
+.res-num{font-size:2.5rem;font-weight:700;letter-spacing:-.05em;color:var(--text);line-height:1;margin-bottom:.35rem}
+.res-num span{color:var(--blue)}
+.res-label{font-size:.78rem;color:var(--text-secondary)}
+
+/* SKILLS BLOCK */
+.skills-two{display:grid;grid-template-columns:1fr 1fr;gap:3rem}
+.skill-group h3{font-size:.75rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--text-tertiary);margin-bottom:1rem}
+.skill-list{display:flex;flex-direction:column;gap:.5rem}
+.skill-item{
+  display:flex;align-items:center;gap:.75rem;
+  font-size:.88rem;color:var(--text-secondary);
+  padding:.5rem .75rem;border-radius:8px;
+  border:1px solid var(--border);background:var(--bg);
+}
+.skill-dot{width:6px;height:6px;border-radius:50%;background:var(--blue);flex-shrink:0}
+
+/* CTA SECTION */
+.cta-row{
+  display:flex;align-items:center;justify-content:space-between;
+  gap:2rem;flex-wrap:wrap;
+  padding:3rem;background:var(--bg-gray);border-radius:20px;
+  border:1px solid var(--border);
+}
+.cta-text h3{font-size:1.3rem;font-weight:700;color:var(--text);letter-spacing:-.02em;margin-bottom:.35rem}
+.cta-text p{font-size:.88rem;color:var(--text-secondary)}
+.cta-btns{display:flex;gap:.75rem;flex-wrap:wrap}
+.btn{font-family:inherit;font-size:.9rem;font-weight:500;padding:.6rem 1.45rem;border-radius:100px;cursor:pointer;border:none;transition:all .15s;letter-spacing:.01em;display:inline-flex;align-items:center;gap:6px}
+.btn-filled{background:var(--blue);color:#fff}
+.btn-filled:hover{background:var(--blue-dark)}
+.btn-outline{background:transparent;color:var(--blue);border:1.5px solid var(--blue)}
+.btn-outline:hover{background:var(--blue-tint)}
+.btn-plain{background:transparent;color:var(--text-secondary);border:1.5px solid var(--border)}
+.btn-plain:hover{border-color:var(--text-secondary);color:var(--text)}
+
+/* FOOTER */
+footer{background:var(--bg-gray);border-top:1px solid var(--border);padding:3rem 1.5rem}
+.foot{max-width:980px;margin:0 auto}
+.foot-top{display:grid;grid-template-columns:1.2fr repeat(3,1fr);gap:2rem;padding-bottom:2.5rem;border-bottom:1px solid var(--border)}
+.foot-brand strong{font-size:.92rem;color:var(--text);font-weight:600;display:block;margin-bottom:.25rem}
+.foot-brand p{font-size:.8rem;color:var(--text-secondary);line-height:1.6}
+.foot-col h4{font-size:.68rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--text-tertiary);margin-bottom:.85rem}
+.foot-col a{display:block;font-size:.82rem;color:var(--text-secondary);margin-bottom:.35rem;transition:color .15s}
+.foot-col a:hover{color:var(--blue)}
+.foot-bottom{display:flex;justify-content:space-between;align-items:center;padding-top:1.5rem;flex-wrap:wrap;gap:.5rem}
+.foot-bottom p{font-size:.76rem;color:var(--text-tertiary)}
+
+/* ANIMATIONS */
+.reveal{opacity:0;transform:translateY(22px);transition:opacity .65s cubic-bezier(.25,.46,.45,.94),transform .65s cubic-bezier(.25,.46,.45,.94)}
+.reveal.in{opacity:1;transform:none}
+
+/* RESPONSIVE */
+@media(max-width:980px){
+  .two-col{grid-template-columns:1fr}
+  .two-col-3{grid-template-columns:1fr 1fr}
+  .pipeline{grid-template-columns:1fr 1fr}
+  .results-grid{grid-template-columns:1fr 1fr}
+  .foot-top{grid-template-columns:1fr 1fr}
+  .nav-links{display:none}
+}
+@media(max-width:680px){
+  nav{padding:0 1rem}
+  .theme-toggle{display:none}
+  .burger{display:flex}
+  .pad{padding:4.5rem 1.25rem}
+  .proj-hero{padding:6rem 1.25rem 3.5rem}
+  .two-col-3{grid-template-columns:1fr}
+  .pipeline{grid-template-columns:1fr}
+  .results-grid{grid-template-columns:1fr 1fr}
+  .skills-two{grid-template-columns:1fr}
+  .cta-row{flex-direction:column;align-items:flex-start}
+  .foot-top{grid-template-columns:1fr}
+  .meta-row{gap:1.25rem}
+}
+</style>
 </head>
 <body>
-    <!-- HEADER -->
-    <header>
-        <div class="header-container">
-            <h1>Léopold MDT</h1>
-            <nav>
-                <ul>
-                    <li><a href="index.html#about">À propos</a></li>
-                    <li><a href="index.html#portfolio">Portfolio</a></li>
-                    <li><a href="index.html#courses">Cours</a></li>
-                    <li><a href="index.html#contact">Contact</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
 
-    <!-- PROJECT HERO -->
-    <section class="project-hero">
-        <div class="project-hero-content">
-            <h1 class="project-title">Hackathon – Prédiction de la note d’un intervenant</h1>
-            <p class="project-subtitle">
-                Modèle de machine learning basé sur l’analyse automatique de CV – Station F, Paris
-            </p>
-            
-            <div class="project-meta">
-                <div class="meta-item">
-                    <span class="meta-label">Organisateur</span>
-                    <span class="meta-value">Educentre</span>
-                </div>
-                <div class="meta-item">
-                    <span class="meta-label">Lieu</span>
-                    <span class="meta-value">Station F, Paris</span>
-                </div>
-                <div class="meta-item">
-                    <span class="meta-label">Cadre</span>
-                    <span class="meta-value">Hackathon</span>
-                </div>
-            </div>
+<div id="prog"></div>
+<button id="btt" aria-label="Haut de page">↑</button>
 
-            <div class="project-tags">
-                <span class="tag">Python</span>
-                <span class="tag">Machine Learning</span>
-                <span class="tag">NLP</span>
-                <span class="tag">TF-IDF</span>
-                <span class="tag">BigQuery</span>
-                <span class="tag">Data Science</span>
-            </div>
-        </div>
-    </section>
+<!-- NAV -->
+<nav id="navbar">
+  <a href="index.html" class="nav-logo">Léopold MDT</a>
+  <ul class="nav-links">
+    <li><a href="index.html#about">Profil</a></li>
+    <li><a href="index.html#quotidien">Quotidien</a></li>
+    <li><a href="index.html#parcours">Parcours</a></li>
+    <li><a href="index.html#projets">Projets</a></li>
+    <li><a href="index.html#cours">Cours</a></li>
+    <li><a href="index.html#contact">Contact</a></li>
+  </ul>
+  <div class="nav-actions">
+    <button class="theme-toggle" id="themeBtn">
+      <div class="toggle-track"><div class="toggle-knob"></div></div>
+      <span id="themeLabel">Clair</span>
+    </button>
+    <button class="burger" id="burgerBtn" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
 
-    <!-- PROJECT CONTENT -->
-    <div class="project-content">
-        <a href="index.html#portfolio" class="back-link">← Retour au portfolio</a>
+<div class="mob" id="mobMenu">
+  <a href="index.html#about"    class="mob-link">Profil</a>
+  <a href="index.html#projets"  class="mob-link">Projets</a>
+  <a href="index.html#cours"    class="mob-link">Cours</a>
+  <a href="index.html#contact"  class="mob-link">Contact</a>
+  <hr/>
+  <div class="mob-theme">
+    <span>☀</span>
+    <button class="theme-toggle" id="themeBtnM" style="margin:0 6px">
+      <div class="toggle-track"><div class="toggle-knob"></div></div>
+    </button>
+    <span>☾</span>
+  </div>
+</div>
 
-        <!-- Vue d'ensemble -->
-        <section class="content-section">
-            <h2 class="section-title">Vue d'ensemble</h2>
- 
-            <p>
-                Ce projet a été réalisé dans le cadre d’un hackathon organisé par Educentre à Station F. 
-                L’objectif était de développer un modèle de machine learning capable d’estimer la note d’un intervenant 
-                à partir de son CV, en s’appuyant sur des techniques de traitement du langage naturel (NLP).
-            </p>
-            <p>
-                La solution vise à aider à la sélection et à l’évaluation d’intervenants en automatisant l’analyse 
-                de profils, tout en garantissant une approche objective et basée sur les données.
-            </p>
-        </section>
-
-        <!-- Contexte et défis -->
-        <section class="content-section">
-            <h2 class="section-title">Contexte et défis</h2>
-            <div class="two-columns">
-                <div>
-                    <h3>Contexte</h3>
-                    <p>
-                        Educentre disposait de données hétérogènes sur les intervenants (CV, notes historiques, informations textuelles).
-                        L’enjeu était de transformer ces données non structurées en variables exploitables par un modèle prédictif.
-                    </p>
-                </div>
-                <div>
-                    <h3>Défis principaux</h3>
-                    <ul class="feature-list">
-                        <li>Traitement automatique de CV non structurés</li>
-                        <li>Nettoyage et vectorisation de texte</li>
-                        <li>Choix d’un modèle pertinent en temps limité</li>
-                        <li>Gestion et centralisation des données sur BigQuery</li>
-                        <li>Automatisation de la collecte de CV</li>
-                    </ul>
-                </div>
-            </div>
-        </section>
-
-        <!-- Solution mise en œuvre -->
-        <section class="content-section">
-            <h2 class="section-title">Solution mise en œuvre</h2>
-            <p>J’ai contribué au développement d’une solution complète, de la collecte des données jusqu’au modèle prédictif :</p>
-            
-            <div class="two-columns">
-                <div>
-                    <h3>Pipeline data & IA</h3>
-                    <ul class="feature-list">
-                        <li>Scraping automatisé de CV via Python</li>
-                        <li>Stockage et gestion des données sur BigQuery</li>
-                        <li>Préparation et nettoyage des données avec pandas</li>
-                        <li>Vectorisation des textes avec TF-IDF</li>
-                    </ul>
-                </div>
-                <div>
-                    <h3>Machine Learning</h3>
-                    <ul class="feature-list">
-                        <li>Construction de features textuelles</li>
-                        <li>Entraînement d’un modèle de prédiction de note</li>
-                        <li>Évaluation des performances du modèle</li>
-                        <li>Interprétation des résultats</li>
-                    </ul>
-                </div>
-            </div>
-        </section>
-
-        <!-- Résultats -->
-        <section class="content-section">
-            <h2 class="section-title">Résultats et apprentissages</h2>
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-number">NLP</div>
-                    <div class="stat-label">Analyse de CV automatisée</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">ML</div>
-                    <div class="stat-label">Modèle prédictif fonctionnel</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">BQ</div>
-                    <div class="stat-label">Centralisation des données</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">Hackathon</div>
-                    <div class="stat-label">Travail en équipe & contraintes temps</div>
-                </div>
-            </div>
-            <p style="margin-top: 2rem;">
-                Ce projet m’a permis de renforcer mes compétences en NLP, en machine learning et en data engineering, 
-                tout en travaillant dans un contexte réel, collaboratif et sous forte contrainte de temps.
-            </p>
-        </section>
-
-        <!-- Technologies utilisées -->
-        <section class="content-section">
-            <h2 class="section-title">Technologies et compétences</h2>
-            <div class="two-columns">
-                <div>
-                    <h3>Outils techniques</h3>
-                    <ul class="feature-list">
-                        <li>Python (pandas, scikit-learn)</li>
-                        <li>TF-IDF pour la vectorisation de texte</li>
-                        <li>Google BigQuery</li>
-                        <li>Web scraping automatisé</li>
-                    </ul>
-                </div>
-                <div>
-                    <h3>Compétences développées</h3>
-                    <ul class="feature-list">
-                        <li>Traitement du langage naturel (NLP)</li>
-                        <li>Machine Learning appliqué</li>
-                        <li>Data preparation & feature engineering</li>
-                        <li>Travail en équipe en environnement hackathon</li>
-                    </ul>
-                </div>
-            </div>
-        </section>
-
-        <!-- Call to action -->
-        <section class="content-section" style="text-align: center;">
-            <h2 class="section-title">Envie d’en savoir plus ?</h2>
-            <p>
-                Le projet est disponible sur mon portfolio et GitHub.  
-                Je serais ravi d’échanger sur ce hackathon ou sur des projets similaires en data et IA.
-            </p>
-            <div style="margin-top: 2rem; display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-                <a href="index.html#contact" class="btn btn-primary">Me contacter</a>
-                <a href="index.html#portfolio" class="btn btn-secondary">Voir d'autres projets</a>
-            </div>
-        </section>
+<!-- HERO -->
+<section class="proj-hero s-white">
+  <div class="wrap">
+    <a href="index.html#projets" class="back-link reveal">
+      <svg viewBox="0 0 24 24" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5m0 0l7 7m-7-7 7-7"/></svg>
+      Retour aux projets
+    </a>
+    <div class="proj-eyebrow reveal">Machine Learning · Hackathon</div>
+    <h1 class="proj-hero-title reveal">Prédiction de la note<br>d'un <em>intervenant</em>.</h1>
+    <p class="proj-hero-desc reveal">Modèle prédictif basé sur l'analyse automatique de CV, développé en équipe lors du hackathon Educentre à Station F, Paris.</p>
+    <div class="chip-row reveal">
+      <span class="chip">Python</span>
+      <span class="chip">Machine Learning</span>
+      <span class="chip">NLP</span>
+      <span class="chip">TF-IDF</span>
+      <span class="chip">BigQuery</span>
+      <span class="chip">Data Science</span>
     </div>
+    <div class="meta-row reveal">
+      <div class="meta-item"><div class="meta-label">Organisateur</div><div class="meta-val">Educentre</div></div>
+      <div class="meta-item"><div class="meta-label">Lieu</div><div class="meta-val">Station F, Paris</div></div>
+      <div class="meta-item"><div class="meta-label">Cadre</div><div class="meta-val">Hackathon</div></div>
+      <div class="meta-item"><div class="meta-label">Type</div><div class="meta-val">Machine Learning</div></div>
+    </div>
+  </div>
+</section>
 
-    <!-- FOOTER -->
-    <footer>
-        <div class="footer-container">
-            <p>&copy; 2025 Léopold Macquart de Terline - Tous droits réservés.</p>
-            <div class="social-links">
-                <a href="https://www.linkedin.com/in/l%C3%A9opold-macquart-de-terline-b99423235/">LinkedIn</a>
-                <a href="https://github.com/Leop250/">GitHub</a>
-            </div>
+<!-- IMAGE HERO -->
+<div class="hero-img-wrap">
+  <img src="projet_1.png" alt="Hackathon Educentre Station F — prédiction de note d'intervenant"/>
+</div>
+
+<!-- VUE D'ENSEMBLE -->
+<section class="s-white pad">
+  <div class="wrap">
+    <div class="two-col">
+      <div>
+        <div class="section-eyebrow reveal">Vue d'ensemble</div>
+        <h2 class="section-headline reveal">L'objectif :<br><em>automatiser</em><br>la sélection.</h2>
+      </div>
+      <div>
+        <p class="body-text reveal">Ce projet a été réalisé lors d'un hackathon organisé par Educentre à Station F. L'objectif : développer en temps limité un modèle de machine learning capable d'estimer la note d'un intervenant à partir de son CV, en s'appuyant sur des techniques de traitement du langage naturel.</p>
+        <p class="body-text reveal">La solution vise à aider à la sélection et à l'évaluation d'intervenants en automatisant l'analyse de profils, tout en garantissant une approche objective et fondée sur les données.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DÉFIS -->
+<section class="s-gray pad">
+  <div class="wrap">
+    <div class="section-eyebrow reveal">Contexte & défis</div>
+    <h2 class="section-headline reveal" style="margin-bottom:2.5rem">Ce qui rendait<br>le problème <em>difficile</em>.</h2>
+    <div class="challenge-list">
+      <div class="challenge-item reveal">
+        <span class="challenge-num">01</span>
+        <div>
+          <h3>Données non structurées</h3>
+          <p>Educentre disposait de données hétérogènes sur les intervenants — CV, notes historiques, informations textuelles. Transformer ces données en variables exploitables par un modèle prédictif était le premier enjeu.</p>
         </div>
-    </footer>
+      </div>
+      <div class="challenge-item reveal">
+        <span class="challenge-num">02</span>
+        <div>
+          <h3>Traitement de texte automatique</h3>
+          <p>Les CV sont par nature non structurés : chaque candidat écrit à sa façon, avec des formats différents. Nettoyer, normaliser et vectoriser ce contenu a nécessité une pipeline NLP robuste.</p>
+        </div>
+      </div>
+      <div class="challenge-item reveal">
+        <span class="challenge-num">03</span>
+        <div>
+          <h3>Contrainte temps</h3>
+          <p>Un hackathon impose de choisir vite et bien — le bon modèle, la bonne feature engineering, sans sur-optimiser. Prioriser les efforts en équipe sous pression est une compétence à part entière.</p>
+        </div>
+      </div>
+      <div class="challenge-item reveal">
+        <span class="challenge-num">04</span>
+        <div>
+          <h3>Centralisation des données sur BigQuery</h3>
+          <p>Pour travailler en équipe sur les mêmes données en temps réel, tout a été centralisé sur Google BigQuery — un choix structurant qui a demandé une configuration rapide et efficace.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PIPELINE -->
+<section class="s-white pad">
+  <div class="wrap">
+    <div class="section-eyebrow reveal">Solution</div>
+    <h2 class="section-headline reveal" style="margin-bottom:2.5rem">Pipeline data & IA<br>de bout en <em>bout</em>.</h2>
+    <div class="pipeline reveal">
+      <div class="pipe-step">
+        <div class="pipe-num">ÉTAPE 01</div>
+        <span class="pipe-icon">🕷️</span>
+        <h3>Collecte automatisée</h3>
+        <p>Scraping de CV via Python pour alimenter le dataset en données réelles.</p>
+      </div>
+      <div class="pipe-step">
+        <div class="pipe-num">ÉTAPE 02</div>
+        <span class="pipe-icon">🗄️</span>
+        <h3>Stockage BigQuery</h3>
+        <p>Centralisation des données sur Google BigQuery pour le travail collaboratif en temps réel.</p>
+      </div>
+      <div class="pipe-step">
+        <div class="pipe-num">ÉTAPE 03</div>
+        <span class="pipe-icon">🧹</span>
+        <h3>Préparation des données</h3>
+        <p>Nettoyage et vectorisation TF-IDF des textes avec pandas pour extraire les features pertinentes.</p>
+      </div>
+      <div class="pipe-step">
+        <div class="pipe-num">ÉTAPE 04</div>
+        <span class="pipe-icon">🤖</span>
+        <h3>Modèle prédictif</h3>
+        <p>Entraînement, évaluation et interprétation du modèle de prédiction de note avec scikit-learn.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RÉSULTATS -->
+<section class="s-gray pad">
+  <div class="wrap">
+    <div class="section-eyebrow reveal">Résultats</div>
+    <h2 class="section-headline reveal" style="margin-bottom:2.5rem">Ce qu'on a livré<br>en <em>conditions réelles</em>.</h2>
+    <div class="results-grid reveal">
+      <div class="res-cell">
+        <div class="res-num"><span>✓</span></div>
+        <div class="res-label">Analyse de CV automatisée (NLP)</div>
+      </div>
+      <div class="res-cell">
+        <div class="res-num"><span>✓</span></div>
+        <div class="res-label">Modèle prédictif fonctionnel</div>
+      </div>
+      <div class="res-cell">
+        <div class="res-num"><span>✓</span></div>
+        <div class="res-label">Données centralisées sur BigQuery</div>
+      </div>
+      <div class="res-cell">
+        <div class="res-num"><span>✓</span></div>
+        <div class="res-label">Projet livré en contrainte hackathon</div>
+      </div>
+    </div>
+    <p class="body-text reveal" style="margin-top:2.5rem">Ce projet a renforcé mes compétences en NLP, en machine learning et en data engineering — dans un contexte réel, collaboratif et sous forte contrainte de temps. Un format d'apprentissage accéléré comme peu d'autres.</p>
+  </div>
+</section>
+
+<!-- COMPÉTENCES -->
+<section class="s-white pad">
+  <div class="wrap">
+    <div class="section-eyebrow reveal">Technologies</div>
+    <h2 class="section-headline reveal" style="margin-bottom:2.5rem">Outils & <em>compétences</em>.</h2>
+    <div class="skills-two reveal">
+      <div class="skill-group">
+        <h3>Outils techniques</h3>
+        <div class="skill-list">
+          <div class="skill-item"><span class="skill-dot"></span>Python (pandas, scikit-learn)</div>
+          <div class="skill-item"><span class="skill-dot"></span>TF-IDF — vectorisation de texte</div>
+          <div class="skill-item"><span class="skill-dot"></span>Google BigQuery</div>
+          <div class="skill-item"><span class="skill-dot"></span>Web scraping automatisé</div>
+        </div>
+      </div>
+      <div class="skill-group">
+        <h3>Compétences développées</h3>
+        <div class="skill-list">
+          <div class="skill-item"><span class="skill-dot"></span>Traitement du langage naturel (NLP)</div>
+          <div class="skill-item"><span class="skill-dot"></span>Machine Learning appliqué</div>
+          <div class="skill-item"><span class="skill-dot"></span>Feature engineering</div>
+          <div class="skill-item"><span class="skill-dot"></span>Travail en équipe sous pression</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="s-gray pad-sm">
+  <div class="wrap">
+    <div class="cta-row reveal">
+      <div class="cta-text">
+        <h3>Envie d'en parler ?</h3>
+        <p>Je réponds en général sous 24h — pour un cours, une collaboration ou juste échanger.</p>
+      </div>
+      <div class="cta-btns">
+        <a href="index.html#contact" class="btn btn-filled">Me contacter</a>
+        <a href="index.html#projets" class="btn btn-plain">Voir d'autres projets</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="foot">
+    <div class="foot-top">
+      <div class="foot-brand">
+        <strong>Léopold Macquart de Terline</strong>
+        <p>Étudiant Data Analyst<br>Île-de-France · France</p>
+      </div>
+      <div class="foot-col">
+        <h4>Navigation</h4>
+        <a href="index.html#about">Profil</a>
+        <a href="index.html#quotidien">Quotidien</a>
+        <a href="index.html#parcours">Parcours</a>
+      </div>
+      <div class="foot-col">
+        <h4>Contenu</h4>
+        <a href="index.html#projets">Projets</a>
+        <a href="index.html#cours">Cours</a>
+        <a href="index.html#contact">Contact</a>
+      </div>
+      <div class="foot-col">
+        <h4>Liens</h4>
+        <a href="https://www.linkedin.com/in/l%C3%A9opold-macquart-de-terline-b99423235/" target="_blank">LinkedIn</a>
+        <a href="https://github.com/Leop250/" target="_blank">GitHub</a>
+        <a href="CV_Léopold_de_terline_alternance.pdf" download>CV</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <p>Copyright © 2025 Léopold Macquart de Terline.</p>
+      <p>Paris, France</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+function applyTheme(t){document.documentElement.setAttribute('data-theme',t);localStorage.setItem('lmdt-t',t);const d=t==='dark';document.getElementById('themeLabel').textContent=d?'Sombre':'Clair'}
+function toggleTheme(){applyTheme(document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark')}
+applyTheme(localStorage.getItem('lmdt-t')||'light');
+document.getElementById('themeBtn').addEventListener('click',toggleTheme);
+document.getElementById('themeBtnM').addEventListener('click',toggleTheme);
+const burger=document.getElementById('burgerBtn'),mob=document.getElementById('mobMenu');
+function openM(){mob.style.display='flex';requestAnimationFrame(()=>mob.classList.add('open'));burger.classList.add('open');document.body.style.overflow='hidden'}
+function closeM(){mob.classList.remove('open');burger.classList.remove('open');document.body.style.overflow='';setTimeout(()=>mob.style.display='none',230)}
+burger.addEventListener('click',()=>mob.classList.contains('open')?closeM():openM());
+document.querySelectorAll('.mob-link').forEach(a=>a.addEventListener('click',closeM));
+const prog=document.getElementById('prog'),btt=document.getElementById('btt');
+window.addEventListener('scroll',()=>{const h=document.documentElement.scrollHeight-window.innerHeight;prog.style.width=(window.scrollY/h*100)+'%';btt.classList.toggle('show',window.scrollY>600)},{passive:true});
+btt.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
+const revObs=new IntersectionObserver(entries=>{entries.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('in'),i*60);revObs.unobserve(e.target)}})},{threshold:.06});
+document.querySelectorAll('.reveal').forEach(el=>revObs.observe(el));
+</script>
 </body>
 </html>
