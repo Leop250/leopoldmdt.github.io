@@ -1,225 +1,790 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" data-theme="light">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Projet Apple – Dashboard & Analyse de données | Léopold MDT</title>
-    <link rel="stylesheet" href="style_project_2.css">
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<meta name="description" content="Projet Apple Dashboard & Analyse de données · Léopold Macquart de Terline"/>
+<title>Apple Dashboard — Léopold MDT</title>
+
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+[data-theme="light"]{
+  --bg:#ffffff;
+  --bg-gray:#f5f5f7;
+  --text:#1d1d1f;
+  --text-secondary:#6e6e73;
+  --text-tertiary:#a1a1a6;
+  --border:rgba(0,0,0,.08);
+  --blue:#0071e3;
+  --blue-dark:#0077ed;
+  --blue-tint:rgba(0,113,227,.1);
+  --nav-bg:rgba(255,255,255,.85);
+}
+
+[data-theme="dark"]{
+  --bg:#000000;
+  --bg-gray:#1c1c1e;
+  --text:#f5f5f7;
+  --text-secondary:#a1a1a6;
+  --text-tertiary:#636366;
+  --border:rgba(255,255,255,.1);
+  --blue:#2997ff;
+  --blue-dark:#47a8ff;
+  --blue-tint:rgba(41,151,255,.12);
+  --nav-bg:rgba(0,0,0,.85);
+}
+
+html{
+  scroll-behavior:smooth;
+  -webkit-font-smoothing:antialiased;
+}
+
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif;
+  line-height:1.6;
+  overflow-x:hidden;
+  transition:.3s;
+}
+
+a{text-decoration:none;color:inherit}
+img{max-width:100%;display:block}
+
+/* NAV */
+nav{
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+  z-index:500;
+  height:48px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 1.5rem;
+  background:var(--nav-bg);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+}
+
+.nav-logo{
+  font-size:.9rem;
+  font-weight:600;
+}
+
+.nav-links{
+  display:flex;
+  gap:1.8rem;
+  list-style:none;
+}
+
+.nav-links a{
+  font-size:.8rem;
+  color:var(--text-secondary);
+  transition:.2s;
+}
+
+.nav-links a:hover{
+  color:var(--text);
+}
+
+/* THEME */
+.theme-toggle{
+  display:flex;
+  align-items:center;
+  gap:7px;
+  background:var(--bg-gray);
+  border:1px solid var(--border);
+  border-radius:100px;
+  padding:4px 12px;
+  cursor:pointer;
+  font-size:.75rem;
+  color:var(--text-secondary);
+}
+
+.toggle-track{
+  width:28px;
+  height:16px;
+  border-radius:100px;
+  background:var(--text-tertiary);
+  position:relative;
+}
+
+.toggle-knob{
+  position:absolute;
+  top:2px;
+  left:2px;
+  width:12px;
+  height:12px;
+  border-radius:50%;
+  background:#fff;
+  transition:.3s;
+}
+
+[data-theme="dark"] .toggle-track{
+  background:var(--blue);
+}
+
+[data-theme="dark"] .toggle-knob{
+  transform:translateX(12px);
+}
+
+/* HERO */
+.hero{
+  padding:8rem 1.5rem 5rem;
+  border-bottom:1px solid var(--border);
+}
+
+.wrap{
+  max-width:980px;
+  margin:0 auto;
+}
+
+.eyebrow{
+  font-size:.75rem;
+  font-weight:600;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  color:var(--blue);
+  margin-bottom:1rem;
+}
+
+.hero-title{
+  font-size:clamp(2.7rem,5vw,4.5rem);
+  line-height:1.02;
+  letter-spacing:-.05em;
+  font-weight:700;
+  margin-bottom:1.5rem;
+}
+
+.hero-title em{
+  color:var(--blue);
+  font-style:normal;
+}
+
+.hero-desc{
+  max-width:650px;
+  font-size:1.15rem;
+  color:var(--text-secondary);
+  line-height:1.8;
+  margin-bottom:2rem;
+}
+
+.chips{
+  display:flex;
+  flex-wrap:wrap;
+  gap:.5rem;
+  margin-bottom:2rem;
+}
+
+.chip{
+  padding:5px 13px;
+  border-radius:100px;
+  background:var(--blue-tint);
+  color:var(--blue);
+  font-size:.75rem;
+  font-weight:500;
+}
+
+.meta{
+  display:flex;
+  gap:2rem;
+  flex-wrap:wrap;
+  padding-top:2rem;
+  border-top:1px solid var(--border);
+}
+
+.meta-label{
+  font-size:.68rem;
+  color:var(--text-tertiary);
+  text-transform:uppercase;
+  margin-bottom:.2rem;
+}
+
+.meta-value{
+  font-size:.9rem;
+  font-weight:500;
+}
+
+/* HERO IMAGE */
+.hero-img{
+  aspect-ratio:21/9;
+  overflow:hidden;
+  background:var(--bg-gray);
+}
+
+.hero-img img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+/* SECTIONS */
+.section{
+  padding:6rem 1.5rem;
+}
+
+.section-gray{
+  background:var(--bg-gray);
+}
+
+.section-eyebrow{
+  font-size:.75rem;
+  font-weight:600;
+  text-transform:uppercase;
+  letter-spacing:.08em;
+  color:var(--blue);
+  margin-bottom:1rem;
+}
+
+.section-title{
+  font-size:clamp(2rem,4vw,3rem);
+  line-height:1.08;
+  letter-spacing:-.04em;
+  margin-bottom:2rem;
+}
+
+.section-title em{
+  color:var(--blue);
+  font-style:normal;
+}
+
+.body{
+  color:var(--text-secondary);
+  line-height:1.9;
+  max-width:700px;
+}
+
+.body + .body{
+  margin-top:1rem;
+}
+
+/* GRID */
+.two-col{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:4rem;
+}
+
+/* LIST */
+.feature-list{
+  display:flex;
+  flex-direction:column;
+  gap:1rem;
+  margin-top:1rem;
+}
+
+.feature-item{
+  border:1px solid var(--border);
+  padding:1rem 1.2rem;
+  border-radius:14px;
+  background:var(--bg);
+  color:var(--text-secondary);
+  font-size:.92rem;
+}
+
+/* STATS */
+.stats{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:1px;
+  background:var(--border);
+  border:1px solid var(--border);
+  border-radius:18px;
+  overflow:hidden;
+  margin-top:2rem;
+}
+
+.stat{
+  background:var(--bg);
+  padding:2.2rem 1rem;
+  text-align:center;
+}
+
+.stat-number{
+  font-size:2.4rem;
+  font-weight:700;
+  letter-spacing:-.05em;
+}
+
+.stat-label{
+  margin-top:.5rem;
+  font-size:.82rem;
+  color:var(--text-secondary);
+}
+
+/* GALLERY */
+.gallery{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:1rem;
+  margin-top:2rem;
+}
+
+.gallery img{
+  border-radius:18px;
+  border:1px solid var(--border);
+  transition:transform .25s;
+}
+
+.gallery img:hover{
+  transform:translateY(-4px);
+}
+
+/* CTA */
+.cta{
+  padding:3rem;
+  border-radius:24px;
+  background:var(--bg-gray);
+  border:1px solid var(--border);
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:2rem;
+  flex-wrap:wrap;
+}
+
+.cta h3{
+  font-size:1.5rem;
+  margin-bottom:.5rem;
+}
+
+.cta p{
+  color:var(--text-secondary);
+}
+
+.btns{
+  display:flex;
+  gap:1rem;
+  flex-wrap:wrap;
+}
+
+.btn{
+  padding:.7rem 1.5rem;
+  border-radius:100px;
+  font-size:.9rem;
+  font-weight:500;
+  transition:.2s;
+}
+
+.btn-primary{
+  background:var(--blue);
+  color:#fff;
+}
+
+.btn-primary:hover{
+  background:var(--blue-dark);
+}
+
+.btn-secondary{
+  border:1px solid var(--border);
+  color:var(--text);
+}
+
+.btn-secondary:hover{
+  background:var(--bg-gray);
+}
+
+/* FOOTER */
+footer{
+  padding:3rem 1.5rem;
+  border-top:1px solid var(--border);
+  background:var(--bg-gray);
+}
+
+.footer-wrap{
+  max-width:980px;
+  margin:0 auto;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:1rem;
+}
+
+.footer-links{
+  display:flex;
+  gap:1rem;
+}
+
+.footer-links a{
+  color:var(--text-secondary);
+  font-size:.9rem;
+}
+
+.footer-links a:hover{
+  color:var(--blue);
+}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+
+  .two-col{
+    grid-template-columns:1fr;
+  }
+
+  .gallery{
+    grid-template-columns:1fr;
+  }
+
+  .stats{
+    grid-template-columns:1fr 1fr;
+  }
+
+}
+
+@media(max-width:680px){
+
+  .nav-links{
+    display:none;
+  }
+
+  .hero{
+    padding:6rem 1.25rem 4rem;
+  }
+
+  .section{
+    padding:4rem 1.25rem;
+  }
+
+  .stats{
+    grid-template-columns:1fr;
+  }
+
+}
+</style>
 </head>
+
 <body>
 
-    <!-- HEADER -->
-    <header>
-        <div class="header-container">
-            <h1>Léopold MDT</h1>
-            <nav>
-                <ul>
-                    <li><a href="index.html#about">À propos</a></li>
-                    <li><a href="index.html#portfolio">Portfolio</a></li>
-                    <li><a href="index.html#courses">Cours</a></li>
-                    <li><a href="index.html#contact">Contact</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo">Léopold MDT</a>
 
-    <!-- PROJECT HERO -->
-    <section class="project-hero">
-        <div class="project-hero-content">
-            <h1 class="project-title">Apple – Dashboard & Analyse de données</h1>
-            <p class="project-subtitle">
-                Analyse des ventes, performances produits et prévisions à partir d’un dataset fictif Apple
-            </p>
+  <ul class="nav-links">
+    <li><a href="index.html#about">Profil</a></li>
+    <li><a href="index.html#projets">Projets</a></li>
+    <li><a href="index.html#cours">Cours</a></li>
+    <li><a href="index.html#contact">Contact</a></li>
+  </ul>
 
-            <div class="project-meta">
-                <div class="meta-item">
-                    <span class="meta-label">Contexte</span>
-                    <span class="meta-value">Projet académique</span>
-                </div>
-                <div class="meta-item">
-                    <span class="meta-label">Année</span>
-                    <span class="meta-value">2024</span>
-                </div>
-                <div class="meta-item">
-                    <span class="meta-label">Durée</span>
-                    <span class="meta-value">2 mois</span>
-                </div>
-            </div>
+  <button class="theme-toggle" id="themeBtn">
+    <div class="toggle-track">
+      <div class="toggle-knob"></div>
+    </div>
+    <span id="themeLabel">Clair</span>
+  </button>
+</nav>
 
-            <div class="project-tags">
-                <span class="tag">Power BI</span>
-                <span class="tag">Python</span>
-                <span class="tag">DAX</span>
-                <span class="tag">Data Analysis</span>
-                <span class="tag">Business Intelligence</span>
-            </div>
-        </div>
-    </section>
+<!-- HERO -->
+<section class="hero">
+  <div class="wrap">
 
-    <!-- PROJECT CONTENT -->
-    <div class="project-content">
-        <a href="index.html#portfolio" class="back-link">← Retour au portfolio</a>
+    <div class="eyebrow">Business Intelligence · Data Analysis</div>
 
-        <!-- Vue d’ensemble -->
-        <section class="content-section">
-            <h2 class="section-title">Vue d’ensemble</h2>
-           
+    <h1 class="hero-title">
+      Apple Dashboard<br>
+      & <em>Analyse</em> de données.
+    </h1>
 
-            <p>
-                Ce projet consistait à analyser un dataset fictif représentant les ventes de produits Apple
-                (iPhone, Mac, iPad, accessoires) afin de concevoir un dashboard décisionnel complet.
-            </p>
+    <p class="hero-desc">
+      Analyse des ventes, performances produits et comportements clients
+      à travers un dashboard interactif Power BI construit à partir d’un dataset Apple fictif.
+    </p>
 
-            <p>
-                L’objectif était de fournir une vision claire des performances commerciales, des comportements
-                clients et des tendances de ventes, tout en intégrant des indicateurs prédictifs.
-            </p>
-        </section>
-
-        <!-- Contexte et enjeux -->
-        <section class="content-section">
-            <h2 class="section-title">Contexte et enjeux</h2>
-
-            <div class="two-columns">
-                <div>
-                    <h3>Contexte</h3>
-                    <p>
-                        Les données fournies étaient brutes et réparties sur plusieurs tables
-                        (clients, produits, employés, magasins, ventes).
-                        Une structuration et une modélisation efficaces étaient nécessaires
-                        pour permettre une analyse pertinente.
-                    </p>
-                </div>
-
-                <div>
-                    <h3>Enjeux principaux</h3>
-                    <ul class="feature-list">
-                        <li>Nettoyage et préparation des données</li>
-                        <li>Modélisation en étoile optimisée</li>
-                        <li>Création de KPI business pertinents</li>
-                        <li>Analyse multi-axes (produits, clients, magasins)</li>
-                        <li>Lisibilité et clarté du dashboard</li>
-                    </ul>
-                </div>
-            </div>
-        </section>
-
-        <!-- Solution mise en œuvre -->
-        <section class="content-section">
-            <h2 class="section-title">Solution mise en œuvre</h2>
-
-            <div class="two-columns">
-                <div>
-                    <h3>Traitement & modélisation</h3>
-                    <ul class="feature-list">
-                        <li>Nettoyage des données avec Python</li>
-                        <li>Création des relations entre tables</li>
-                        <li>Modèle en étoile dans Power BI</li>
-                        <li>Mesures DAX pour les KPI clés</li>
-                    </ul>
-                </div>
-
-                <div>
-                    <h3>Fonctionnalités du dashboard</h3>
-                    <ul class="feature-list">
-                        <li>Analyse des ventes globales</li>
-                        <li>Performance par produit et catégorie</li>
-                        <li>Analyse clients et employés</li>
-                        <li>Comparaison temporelle</li>
-                        <li>Filtres dynamiques et drill-down</li>
-                    </ul>
-                </div>
-            </div>
-        </section>
-
-        <!-- Résultats -->
-        <section class="content-section">
-            <h2 class="section-title">Résultats et apprentissages</h2>
-
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-number">5+</div>
-                    <div class="stat-label">KPI business créés</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">6</div>
-                    <div class="stat-label">Tables modélisées</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">100%</div>
-                    <div class="stat-label">Données nettoyées</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">1</div>
-                    <div class="stat-label">Dashboard interactif</div>
-                </div>
-            </div>
-
-            <p style="margin-top: 2rem;">
-                Ce projet m’a permis de consolider mes compétences en analyse de données,
-                modélisation Power BI et création de dashboards orientés décisionnel.
-            </p>
-        </section>
-
-        <!-- Galerie -->
-        <section class="content-section">
-            <h2 class="section-title">Aperçus du dashboard</h2>
-            <div class="gallery">
-                <img src="image_apple_un.png" alt="Vue globale">
-                <img src="image_apple_deux.png" alt="Analyse produits">
-                <img src="image_apple_trois.png" alt="Analyse clients">
-            </div>
-        </section>
-
-        <!-- Technologies -->
-        <section class="content-section">
-            <h2 class="section-title">Technologies et compétences</h2>
-
-            <div class="two-columns">
-                <div>
-                    <h3>Outils utilisés</h3>
-                    <ul class="feature-list">
-                        <li>Power BI Desktop</li>
-                        <li>Python (pandas, numpy)</li>
-                        <li>DAX</li>
-                        <li>Power Query</li>
-                    </ul>
-                </div>
-
-                <div>
-                    <h3>Compétences développées</h3>
-                    <ul class="feature-list">
-                        <li>Analyse de données business</li>
-                        <li>Création de KPI</li>
-                        <li>Visualisation de données</li>
-                        <li>Data storytelling</li>
-                    </ul>
-                </div>
-            </div>
-        </section>
-
-        <!-- Call to action -->
-        <section class="content-section" style="text-align: center;">
-            <h2 class="section-title">Un projet data en tête ?</h2>
-            <p>N’hésitez pas à me contacter pour échanger autour de vos besoins data.</p>
-
-            <div style="margin-top: 2rem; display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-                <a href="index.html#contact" class="btn btn-primary">Me contacter</a>
-                <a href="index.html#portfolio" class="btn btn-secondary">Voir d'autres projets</a>
-            </div>
-        </section>
+    <div class="chips">
+      <span class="chip">Power BI</span>
+      <span class="chip">Python</span>
+      <span class="chip">DAX</span>
+      <span class="chip">Business Intelligence</span>
+      <span class="chip">Data Analysis</span>
     </div>
 
-    <!-- FOOTER -->
-    <footer>
-        <div class="footer-container">
-            <p>&copy; 2025 Léopold Macquart de Terline - Tous droits réservés.</p>
-            <div class="social-links">
-                <a href="https://www.linkedin.com/in/l%C3%A9opold-macquart-de-terline-b99423235/">LinkedIn</a>
-                <a href="https://github.com/Leop250/">GitHub</a>
-            </div>
+    <div class="meta">
+      <div>
+        <div class="meta-label">Contexte</div>
+        <div class="meta-value">Projet académique</div>
+      </div>
+
+      <div>
+        <div class="meta-label">Année</div>
+        <div class="meta-value">2024</div>
+      </div>
+
+      <div>
+        <div class="meta-label">Durée</div>
+        <div class="meta-value">2 mois</div>
+      </div>
+
+      <div>
+        <div class="meta-label">Type</div>
+        <div class="meta-value">Dashboard BI</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- IMAGE -->
+<div class="hero-img">
+  <img src="image_apple_un.png" alt="Dashboard Apple Power BI">
+</div>
+
+<!-- OVERVIEW -->
+<section class="section">
+  <div class="wrap">
+
+    <div class="two-col">
+
+      <div>
+        <div class="section-eyebrow">Vue d’ensemble</div>
+
+        <h2 class="section-title">
+          Transformer des données<br>
+          en <em>insights</em> décisionnels.
+        </h2>
+      </div>
+
+      <div>
+        <p class="body">
+          Ce projet consistait à analyser un dataset fictif représentant les ventes de produits Apple afin de concevoir un dashboard décisionnel complet sous Power BI.
+        </p>
+
+        <p class="body">
+          L’objectif était de fournir une vision claire des performances commerciales, des comportements clients et des tendances de ventes grâce à des KPI interactifs et des visualisations dynamiques.
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- CHALLENGES -->
+<section class="section section-gray">
+  <div class="wrap">
+
+    <div class="section-eyebrow">Contexte & enjeux</div>
+
+    <h2 class="section-title">
+      Structurer, modéliser<br>
+      et rendre les données <em>exploitables</em>.
+    </h2>
+
+    <div class="two-col">
+
+      <div>
+        <div class="feature-list">
+          <div class="feature-item">Nettoyage et préparation des données</div>
+          <div class="feature-item">Modélisation en étoile optimisée</div>
+          <div class="feature-item">Création de KPI business pertinents</div>
         </div>
-    </footer>
+      </div>
+
+      <div>
+        <div class="feature-list">
+          <div class="feature-item">Analyse multi-axes produits / clients / magasins</div>
+          <div class="feature-item">Comparaison temporelle des performances</div>
+          <div class="feature-item">Dashboard clair et interactif</div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- SOLUTION -->
+<section class="section">
+  <div class="wrap">
+
+    <div class="section-eyebrow">Solution</div>
+
+    <h2 class="section-title">
+      Pipeline data & dashboard<br>
+      orienté <em>business</em>.
+    </h2>
+
+    <div class="two-col">
+
+      <div>
+        <div class="feature-list">
+          <div class="feature-item">Nettoyage des données avec Python</div>
+          <div class="feature-item">Création des relations entre tables</div>
+          <div class="feature-item">Modèle en étoile dans Power BI</div>
+          <div class="feature-item">Mesures DAX pour les KPI clés</div>
+        </div>
+      </div>
+
+      <div>
+        <div class="feature-list">
+          <div class="feature-item">Analyse des ventes globales</div>
+          <div class="feature-item">Analyse produits & catégories</div>
+          <div class="feature-item">Analyse clients et employés</div>
+          <div class="feature-item">Filtres dynamiques & drill-down</div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- RESULTS -->
+<section class="section section-gray">
+  <div class="wrap">
+
+    <div class="section-eyebrow">Résultats</div>
+
+    <h2 class="section-title">
+      Ce que le projet<br>
+      a permis de <em>construire</em>.
+    </h2>
+
+    <div class="stats">
+
+      <div class="stat">
+        <div class="stat-number">5+</div>
+        <div class="stat-label">KPI business créés</div>
+      </div>
+
+      <div class="stat">
+        <div class="stat-number">6</div>
+        <div class="stat-label">Tables modélisées</div>
+      </div>
+
+      <div class="stat">
+        <div class="stat-number">100%</div>
+        <div class="stat-label">Données nettoyées</div>
+      </div>
+
+      <div class="stat">
+        <div class="stat-number">1</div>
+        <div class="stat-label">Dashboard interactif</div>
+      </div>
+
+    </div>
+
+    <p class="body" style="margin-top:2rem;">
+      Ce projet m’a permis de renforcer mes compétences en Business Intelligence, modélisation Power BI et data storytelling à travers une approche orientée décisionnel.
+    </p>
+
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section class="section">
+  <div class="wrap">
+
+    <div class="section-eyebrow">Dashboard</div>
+
+    <h2 class="section-title">
+      Aperçus du <em>dashboard</em>.
+    </h2>
+
+    <div class="gallery">
+      <img src="image_apple_un.png" alt="">
+      <img src="image_apple_deux.png" alt="">
+      <img src="image_apple_trois.png" alt="">
+    </div>
+
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section class="section section-gray">
+  <div class="wrap">
+
+    <div class="section-eyebrow">Technologies</div>
+
+    <h2 class="section-title">
+      Outils & <em>compétences</em>.
+    </h2>
+
+    <div class="two-col">
+
+      <div>
+        <div class="feature-list">
+          <div class="feature-item">Power BI Desktop</div>
+          <div class="feature-item">Python (pandas, numpy)</div>
+          <div class="feature-item">DAX</div>
+          <div class="feature-item">Power Query</div>
+        </div>
+      </div>
+
+      <div>
+        <div class="feature-list">
+          <div class="feature-item">Analyse de données business</div>
+          <div class="feature-item">Création de KPI</div>
+          <div class="feature-item">Visualisation de données</div>
+          <div class="feature-item">Data storytelling</div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="section">
+  <div class="wrap">
+
+    <div class="cta">
+
+      <div>
+        <h3>Un projet data en tête ?</h3>
+        <p>Discutons ensemble de vos besoins en analyse de données et dashboards.</p>
+      </div>
+
+      <div class="btns">
+        <a href="index.html#contact" class="btn btn-primary">Me contacter</a>
+        <a href="index.html#projets" class="btn btn-secondary">Voir d'autres projets</a>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+
+  <div class="footer-wrap">
+
+    <p>© 2025 Léopold Macquart de Terline</p>
+
+    <div class="footer-links">
+      <a href="https://linkedin.com">LinkedIn</a>
+      <a href="https://github.com">GitHub</a>
+    </div>
+
+  </div>
+
+</footer>
+
+<script>
+function applyTheme(t){
+  document.documentElement.setAttribute('data-theme',t);
+  localStorage.setItem('theme',t);
+  document.getElementById('themeLabel').textContent=t==='dark'?'Sombre':'Clair';
+}
+
+function toggleTheme(){
+  applyTheme(
+    document.documentElement.getAttribute('data-theme')==='dark'
+    ?'light'
+    :'dark'
+  );
+}
+
+applyTheme(localStorage.getItem('theme')||'light');
+
+document.getElementById('themeBtn')
+.addEventListener('click',toggleTheme);
+</script>
 
 </body>
 </html>
