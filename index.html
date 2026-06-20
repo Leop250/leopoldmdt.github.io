@@ -439,6 +439,10 @@ nav{
 .fg input:focus,.fg textarea:focus{border-color:var(--blue);box-shadow:0 0 0 3px var(--blue-tint);background:var(--card)}
 .fg textarea{min-height:110px}
 .form-note{font-size:.75rem;color:var(--text-tertiary);margin-bottom:.9rem}
+.form-status{font-size:.82rem;margin-top:.7rem;min-height:1.1em}
+.form-status.ok{color:var(--green)}
+.form-status.err{color:#d33}
+.hp-field{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
 
 /* ─── FOOTER ─────────────────────────────────────── */
 footer{background:var(--bg-gray);border-top:1px solid var(--border);padding:3rem 1.5rem}
@@ -786,13 +790,15 @@ footer{background:var(--bg-gray);border-top:1px solid var(--border);padding:3rem
           <a href="https://github.com/Leop250/" target="_blank" class="cl"><span class="cl-icon">🐙</span>GitHub — Leop250</a>
         </div>
       </div>
-      <form onsubmit="handleSubmit(event)" novalidate class="reveal">
-        <div class="fg"><label>Nom</label><input type="text" placeholder="Jean Dupont" required/></div>
-        <div class="fg"><label>Email</label><input type="email" placeholder="jean@exemple.fr" required/></div>
-        <div class="fg"><label>Objet</label><input type="text" placeholder="Cours Python, projet data…"/></div>
-        <div class="fg"><label>Message</label><textarea placeholder="Bonjour Léopold…" required></textarea></div>
+      <form action="https://formspree.io/f/xwvjgjoj" method="POST" onsubmit="handleSubmit(event)" novalidate class="reveal">
+        <div class="fg"><label>Nom</label><input type="text" name="name" placeholder="Jean Dupont" required/></div>
+        <div class="fg"><label>Email</label><input type="email" name="email" placeholder="jean@exemple.fr" required/></div>
+        <div class="fg"><label>Objet</label><input type="text" name="subject" placeholder="Cours Python, projet data…"/></div>
+        <div class="fg"><label>Message</label><textarea name="message" placeholder="Bonjour Léopold…" required></textarea></div>
+        <input type="text" name="_gotcha" class="hp-field" tabindex="-1" autocomplete="off"/>
         <p class="form-note">Je lis tous les messages et réponds personnellement.</p>
         <button type="submit" class="btn btn-filled" id="submitBtn">Envoyer</button>
+        <p class="form-status" id="formStatus"></p>
       </form>
     </div>
   </div>
@@ -827,7 +833,7 @@ footer{background:var(--bg-gray);border-top:1px solid var(--border);padding:3rem
       </div>
     </div>
     <div class="foot-bottom">
-      <p>Copyright © 2026 Léopold Macquart de Terline.</p>
+      <p>Copyright © 2026 Léopold de Terline.</p>
       <p>Paris, France</p>
     </div>
   </div>
@@ -867,9 +873,6 @@ btt.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
 /* ACTIVE NAV */
 const secs=document.querySelectorAll('section[id]');
 const navAs=document.querySelectorAll('.nav-links a');
-new IntersectionObserver(entries=>{
-  entries.forEach(e=>{if(e.isIntersecting)navAs.forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+e.target.id))});
-},{threshold:.3}).observe||secs.forEach(s=>s);
 const navIo=new IntersectionObserver(entries=>{
   entries.forEach(e=>{if(e.isIntersecting)navAs.forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+e.target.id))});
 },{threshold:.35});
@@ -893,12 +896,48 @@ new IntersectionObserver(entries=>{
   entries.forEach(e=>{if(e.isIntersecting){e.target.querySelectorAll('[data-count]').forEach(countUp);}});
 },{threshold:.6}).observe(document.querySelector('.stats-grid'));
 
-/* FORM */
-function handleSubmit(e){
+/* FORM — envoi réel via Formspree */
+async function handleSubmit(e){
   e.preventDefault();
-  const b=document.getElementById('submitBtn');
-  b.textContent='Envoyé ✓';b.style.background='var(--green)';b.disabled=true;
-  setTimeout(()=>{b.textContent='Envoyer';b.style.background='';b.disabled=false;e.target.reset();},4000);
+  const form = e.target;
+  const b = document.getElementById('submitBtn');
+  const status = document.getElementById('formStatus');
+  const original = b.textContent;
+
+  b.disabled = true;
+  b.style.opacity = '0.6';
+  status.textContent = '';
+  status.className = 'form-status';
+
+  try {
+    const res = await fetch(form.action, {
+      method: 'POST',
+      body: new FormData(form),
+      headers: { 'Accept': 'application/json' }
+    });
+
+    if (res.ok) {
+      b.textContent = 'Envoyé ✓';
+      b.style.background = 'var(--green)';
+      status.textContent = 'Merci, votre message a bien été envoyé.';
+      status.classList.add('ok');
+      form.reset();
+    } else {
+      throw new Error('Erreur serveur');
+    }
+  } catch (err) {
+    b.textContent = 'Erreur, réessayez';
+    b.style.background = '#d33';
+    status.textContent = "Une erreur est survenue, merci de réessayer ou d'écrire directement par mail.";
+    status.classList.add('err');
+  }
+
+  setTimeout(() => {
+    b.textContent = original;
+    b.style.background = '';
+    b.style.opacity = '';
+    b.disabled = false;
+  }, 4000);
 }
 </script>
 </body>
