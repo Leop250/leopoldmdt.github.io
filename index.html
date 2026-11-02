@@ -273,6 +273,45 @@ nav{
   display:flex;align-items:center;justify-content:center;
 }
 
+/* ─── PHOTO DE PROFIL ───────────────────────────── */
+.hero-avatar{
+  position:relative;width:132px;height:132px;border-radius:50%;
+  margin:0 auto 1.6rem;padding:4px;
+  background:linear-gradient(135deg,var(--blue),#5ac8fa);
+  box-shadow:0 12px 40px rgba(0,113,227,.22);
+}
+.hero-avatar img,.hero-avatar .avatar-fallback{
+  width:100%;height:100%;border-radius:50%;object-fit:cover;
+  border:4px solid var(--bg);background:var(--bg-gray);
+}
+.avatar-fallback{
+  display:none;align-items:center;justify-content:center;
+  font-size:2.6rem;font-weight:700;letter-spacing:-.04em;color:var(--blue);
+}
+.hero-avatar.no-img img{display:none}
+.hero-avatar.no-img .avatar-fallback{display:flex}
+
+/* ─── LOGOS ENTREPRISES ─────────────────────────── */
+.tl-head{display:flex;align-items:center;gap:14px;margin-bottom:.6rem}
+.tl-logo{
+  width:52px;height:52px;border-radius:12px;flex-shrink:0;
+  background:#fff;border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;overflow:hidden;
+  box-shadow:0 2px 8px rgba(0,0,0,.05);
+}
+.tl-logo img{width:100%;height:100%;object-fit:contain;padding:6px}
+.tl-logo .logo-fallback{display:none;font-size:.95rem;font-weight:700;color:var(--blue);letter-spacing:-.02em}
+.tl-logo.no-img img{display:none}
+.tl-logo.no-img .logo-fallback{display:block}
+.tl-head .tl-co{margin-bottom:.15rem}
+.tl-head .tl-role{margin-bottom:0}
+.tl-now{
+  display:inline-block;margin-left:.5rem;vertical-align:middle;
+  font-size:.62rem;font-weight:600;letter-spacing:.04em;text-transform:uppercase;
+  color:var(--green);background:rgba(48,209,88,.12);
+  border-radius:100px;padding:2px 9px;
+}
+
 /* ─── TIMELINE ──────────────────────────────────── */
 .tl{display:flex;flex-direction:column}
 .tl-item{
@@ -545,10 +584,14 @@ footer{background:var(--bg-gray);border-top:1px solid var(--border);padding:3rem
 
 <!-- ═══ HERO ════════════════════════════════════════ -->
 <section class="hero s-white" id="about">
-  <div class="hero-eyebrow">Étudiant · Data & IA · Alternant Safran</div>
+  <div class="hero-avatar" id="heroAvatar">
+    <img src="photo-profil.jpg" alt="Photo de Léopold Macquart de Terline" onerror="this.parentElement.classList.add('no-img')"/>
+    <div class="avatar-fallback">LM</div>
+  </div>
+  <div class="hero-eyebrow">Étudiant · Data & IA · Data Analyst en alternance chez AFTRAL</div>
   <h1 class="hero-title">Data Analyst.<br>En <em>formation</em>,<br>en production.</h1>
   <p class="hero-copy">
-    Mastère Data & IA en alternance chez Aftral J'automatise ce qui est automatisable, je visualise ce qui aide à décider, et j'enseigne à ceux qui veulent comprendre.
+    Mastère Data & IA en alternance chez AFTRAL. J'automatise ce qui est automatisable, je visualise ce qui aide à décider, et j'enseigne à ceux qui veulent comprendre.
   </p>
   <div class="hero-ctas">
     <a href="#projets" class="btn btn-filled">Voir mes projets</a>
@@ -656,10 +699,37 @@ footer{background:var(--bg-gray);border-top:1px solid var(--border);padding:3rem
     <h2 class="section-headline reveal">Formation<br><em>& expériences</em></h2>
     <div class="tl">
       <div class="tl-item reveal">
-        <div class="tl-date">2023 — 2025</div>
+        <div class="tl-date">2026 — 2028</div>
         <div>
-          <div class="tl-co">Safran Group · Alternance</div>
-          <div class="tl-role">Data Analyst</div>
+          <div class="tl-head">
+            <div class="tl-logo">
+              <img src="logo-aftral.png" alt="Logo AFTRAL" onerror="this.parentElement.classList.add('no-img')"/>
+              <span class="logo-fallback">AF</span>
+            </div>
+            <div>
+              <div class="tl-co">AFTRAL · Alternance</div>
+              <div class="tl-role">Data Analyst</div>
+            </div>
+          </div>
+          <p class="tl-desc">Data Analyst en alternance : automatisation de traitements de données (VBA, Python), fiabilisation des données clients et reporting pour les équipes commerciales et administratives.</p>
+          <div class="tl-chips">
+            <span class="tl-chip">Python</span><span class="tl-chip">VBA</span><span class="tl-chip">Excel</span><span class="tl-chip">Power BI</span><span class="tl-chip">SQL</span>
+          </div>
+        </div>
+      </div>
+      <div class="tl-item reveal">
+        <div class="tl-date">2024 — 2026</div>
+        <div>
+          <div class="tl-head">
+            <div class="tl-logo">
+              <img src="logo-safran.png" alt="Logo Safran" onerror="this.parentElement.classList.add('no-img')"/>
+              <span class="logo-fallback">SA</span>
+            </div>
+            <div>
+              <div class="tl-co">Safran Group · Alternance</div>
+              <div class="tl-role">Data Analyst</div>
+            </div>
+          </div>
           <p class="tl-desc">Automatisation de processus avec Python, dashboards Power BI pour le suivi opérationnel, traitement de datasets industriels sur Azure.</p>
           <div class="tl-chips">
             <span class="tl-chip">Python</span><span class="tl-chip">Power BI</span><span class="tl-chip">SQL</span><span class="tl-chip">Azure</span><span class="tl-chip">Pandas</span>
@@ -669,8 +739,13 @@ footer{background:var(--bg-gray);border-top:1px solid var(--border);padding:3rem
       <div class="tl-item reveal">
         <div class="tl-date">2023 — 2025</div>
         <div>
-          <div class="tl-co">École · Mastère</div>
-          <div class="tl-role">Data & Intelligence Artificielle</div>
+          <div class="tl-head">
+            <div class="tl-logo no-img"><span class="logo-fallback">🎓</span></div>
+            <div>
+              <div class="tl-co">École · Mastère</div>
+              <div class="tl-role">Data & Intelligence Artificielle</div>
+            </div>
+          </div>
           <p class="tl-desc">Formation spécialisée en Data Analysis, Machine Learning et visualisation de données, en parallèle de l'alternance.</p>
           <div class="tl-chips">
             <span class="tl-chip">Machine Learning</span><span class="tl-chip">Deep Learning</span><span class="tl-chip">Statistiques</span>
@@ -680,8 +755,13 @@ footer{background:var(--bg-gray);border-top:1px solid var(--border);padding:3rem
       <div class="tl-item reveal">
         <div class="tl-date">2021 — 2023</div>
         <div>
-          <div class="tl-co">Indépendant</div>
-          <div class="tl-role">Formateur Data</div>
+          <div class="tl-head">
+            <div class="tl-logo no-img"><span class="logo-fallback">💡</span></div>
+            <div>
+              <div class="tl-co">Indépendant</div>
+              <div class="tl-role">Formateur Data</div>
+            </div>
+          </div>
           <p class="tl-desc">Cours particuliers en SQL, Python et Power BI pour étudiants et professionnels. Pédagogie adaptée à chaque niveau.</p>
           <div class="tl-chips">
             <span class="tl-chip">SQL</span><span class="tl-chip">Python</span><span class="tl-chip">Power BI</span>
